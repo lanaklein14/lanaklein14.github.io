@@ -1,3 +1,7 @@
+document.querySelectorAll('circle.uid-c4a17639-159f-4403-9bac-b4c2ddc278fd').forEach(circle => { 
+    circle.style.fill = "#5580C8";
+})
+
 document.querySelector('body').addEventListener( 'DOMNodeInserted', function ( event ) {
     if( event.target.nodeName == 'SECTION' && event.target.classList.contains('clump-content')) {
       let hasFaloopReport = false;

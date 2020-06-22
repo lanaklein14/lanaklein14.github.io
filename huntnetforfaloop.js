@@ -47,7 +47,7 @@ document.querySelector('body').addEventListener( 'DOMNodeInserted', function ( e
 				div.classList.add("score");
 				let link = document.createElement('a');
 				link.target= '_blank';
-				link.href= `https://faloop.app/${world.toLowerCase()}?&mobid=${currentmobid}&time=${mean}`;
+				link.href= `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;
 				link.innerText = `Open ${world} in Faloop!`;
 			    event.target.appendChild(div);
 			    div.appendChild(link);

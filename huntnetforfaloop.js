@@ -1,3 +1,4 @@
+
 function textToDate(text) {
 	const now = new Date();
 	const year = now.getFullYear();
@@ -41,14 +42,14 @@ document.querySelector('body').addEventListener( 'DOMNodeInserted', function ( e
 			}
 			console.log(mean);
 			console.log(new Date(mean));
-			if (!hasFaloopReport) {
+			if (!hasFaloopReport && currentmobid !== 0) {
 				const world = document.querySelector('#selected-world').textContent;
 				let div = document.createElement('div');
 				div.classList.add("score");
 				let link = document.createElement('a');
 				link.target= '_blank';
 				link.href= `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;
-				link.innerText = `Open ${world} in Faloop!`;
+				link.innerText = `Open Faloop!`;
 			    event.target.appendChild(div);
 			    div.appendChild(link);
 			}
@@ -59,7 +60,7 @@ document.querySelector('body').addEventListener( 'DOMNodeInserted', function ( e
 let currentmobid = 0;
   
 document.querySelector('body').addEventListener(
-	'click', function (event) {
+	'mouseover', function (event) {
 	var timelineElement = event.target.closest('div.timeline');
 	if (timelineElement) {
 		const title = timelineElement.querySelector('h3.mob-name').getAttribute('title');

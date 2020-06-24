@@ -42,9 +42,9 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 ## インストール手順 ("User JavaScript and CSS" extensionを使用する場合)
 
 1. 前提拡張機能のインストール
-   1. [User JavaScript and CSS](https://chrome.google.com/webstore/detail/user-javascript-and-css/nbhcbdghjpllgmfilhnhkllmkecfmpld) 拡張機能をChromeにインストールする。
+   1. [User JavaScript and CSS](https://chrome.google.com/webstore/detail/user-javascript-and-css/nbhcbdghjpllgmfilhnhkllmkecfmpld) 拡張機能をChromeにインストールします。
 
-1. 連携用custom javascriptsのインポート
+1. 連携用ユーザースクリプトのインポート
    1. "User JavaScript and CSS" 拡張機能の歯車アイコンをクリックしてトップページを表示します。
    1. "Libraries" タブで、次の2つのjavascriptファイルを追加します。
    

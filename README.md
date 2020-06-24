@@ -1,5 +1,33 @@
 # Custom JavaScripts for ffxiv-the-hunt.net -> Faloop! integration
 
+## Features
+
+### Custom JavaScript for ffxiv-the-hunt.net
+
+* Overwrite the CSS
+
+  Set blue color to the reports which is reported by Faloop. Also replace the uid string to "Faloop!".
+  
+* Add "Open Faloop!" link
+
+  Add integration link to the S-mob reports (exclude forgiven rebellion) which is NOT reported by Faloop.
+  It link and lauches Faloop App in new window with following URL.
+  
+  https://faloop.app/[worldname]?mobid=[mobid]&time=[timeofdeath]
+  
+  Parameter | Description
+  ------------ | -------------
+  worldname | world name in lowercase string
+  mobid | mob id in integer
+  timeofdeath | time of death in unixtime millisec. median of the candidate reports
+
+### Custom JavaScript for Faloop!
+
+* Automatically open the "Report" tab and set default Time of Death
+
+  When Faloop is launched with mobid and time URL query parametes, it tries to open the "Report" tab and set the default Time of Death.
+  The user still have to confirm the input and submit the report manually, but it will reduce the chance or input mistakes.
+
 ## Sample movie
 
 https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4

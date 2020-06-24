@@ -1,7 +1,3 @@
-const urlParams = new URLSearchParams(window.location.search);
-const mobid = urlParams.get('mobid');
-const time = urlParams.get('time');
-console.log(mobid, time);
 
 const mobs = [{
     id: 2962,
@@ -457,45 +453,60 @@ const mobs = [{
     name_ja: "グニット",
     name_de: "Gunitt"
 }];
-const mob = mobs.find(m => {return m.id == mobid});
 
-let setDefaultTOD = function() {
-	const detailPane = document.querySelector('div.TimerGroups_details__YAKwO');
-	const button = detailPane.querySelectorAll('button.ActionButtons_up-down-btn__KPkj-.btn.btn-danger')[1];
-	if (button) {
-		let minutes = Math.floor((Date.now() - time) / 1000 / 60);
-		console.log('total minutes', minutes);
+/**
+ * Find the subtract TOD button in DOM and click it based on the given time.
+ * @param {int} timeOfDeath - timeOfDeath in unixtime millisec
+ */
+function setDefaultTOD(timeOfDeath) {
+    const detailPane = document.querySelector('div.TimerGroups_details__YAKwO');
+    if (!detailPane) {
+        console.log('Could not find the details pane. skipping.');
+        return;
+    }
+    const button = detailPane.querySelectorAll('button.ActionButtons_up-down-btn__KPkj-.btn.btn-danger')[1];
+	if (!button) {
+        console.log('Could not find subtract TOD button. skipping.');
+        return;
+    }
+    let minutes = Math.floor((Date.now() - timeOfDeath) / 1000 / 60);
+	console.log('Total minutes', minutes);
 
-		const countHalfDay = Math.floor(minutes / 720);
-		minutes = minutes % 720;
-		console.log('countHalfDay', countHalfDay);
-		console.log('remaining minutes', minutes);
-		const countHours = Math.floor(minutes / 60);
-		minutes = minutes % 60;
-		console.log('countHours', countHours);
-		console.log('remaining minutes', minutes);
-		const countTen = Math.floor(minutes / 10);
-		minutes = minutes % 10;
-		console.log('countTen', countTen);
-		console.log('remaining minutes', minutes);
+	const countCtrlShiftKey = Math.floor(minutes / 720);
+	console.log('Number of clicks with Ctrl+Shift Key(720 min each):', countCtrlShiftKey);
+	minutes = minutes % 720;
+	console.log('Remaining minutes', minutes);
+	const countCtrlKey = Math.floor(minutes / 60);
+	console.log('Number of clicks with Ctrl Key(60 min each):', countCtrlKey);
+	minutes = minutes % 60;
+	console.log('Remaining minutes', minutes);
+	const countShiftKey = Math.floor(minutes / 10);
+	console.log('Number of clicks with Shift Key(10 min each):', countShiftKey);
+	minutes = minutes % 10;
+	console.log('Number of clicks(=Remaining minutes):', minutes);
 
-		for (let i=0; i<countHalfDay; i++) {
-			button.dispatchEvent(new MouseEvent('click', { bubbles: true, ctrlKey: true, shiftKey: true }));
-		}
-		for (let i=0; i<countHours; i++) {
-			button.dispatchEvent(new MouseEvent('click', { bubbles: true, ctrlKey: true }));
-		}
-		for (let i=0; i<countTen; i++) {
-			button.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: true  }));
-		}
-		for (let i=0; i<minutes; i++) {
-			button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-		}
+	for (let i=0; i<countCtrlShiftKey; i++) {
+		button.dispatchEvent(new MouseEvent('click', { bubbles: true, ctrlKey: true, shiftKey: true }));
+	}
+	for (let i=0; i<countCtrlKey; i++) {
+		button.dispatchEvent(new MouseEvent('click', { bubbles: true, ctrlKey: true }));
+	}
+	for (let i=0; i<countShiftKey; i++) {
+	    button.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: true  }));
+	}
+	for (let i=0; i<minutes; i++) {
+		button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 	}
 }
 
-let retryCount = 0;
-let invokeShortCut = function() {
+/**
+ * Find the mob row (retry for 5 seconds in case of loading). 
+ * Open the details pane and call setDefaultTOD function.
+ * @param {object} mob - target mob object
+ * @param {int} timeOfDeath - time of death in unixtime millisec
+ * @param {int} retryCount - retry count
+ */
+function selectMob(mob, timeOfDeath, retryCount) {
 	let nameTags = Array.from(document.querySelectorAll('span.MarkNameColumn_name__14HXZ'));
 	let nameTag = nameTags.find(t => {
 		const name = t.textContent.toLowerCase();
@@ -506,16 +517,38 @@ let invokeShortCut = function() {
 	});
 
 	if (nameTag) {
-		console.log('found!', nameTag);
+		console.log(`Mob row for ${nameTag.textContent} found.`);
 		const row = nameTag.closest('div.TimerGroupRow_row__2GYfv');
 		row.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-		setTimeout(setDefaultTOD, 500);
+		setTimeout(function() {setDefaultTOD(timeOfDeath);}, 500);
 	}	
 	else {
-		if (retryCount++ < 10) {
-			console.log('not found. will retry.');
-			setTimeout(invokeShortCut, 500);
-		}
+		if (retryCount > 0) {
+            console.log(`Mob row not found. Retry(${retryCount-1})`);
+			setTimeout(function() {selectMob(mob, timeOfDeath, retryCount-1)}, 1000);
+        }
+        else {
+            console.log(`Mob row not found. Skipping.`)
+        }
 	}
 }
-invokeShortCut();
+
+
+/**
+ * Main function. Validate the url parameters and execute selectMob.
+ */
+function main() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mobid = urlParams.get('mobid');
+    const time = urlParams.get('time');
+    const mob = mobs.find(m => {return m.id == mobid});
+    if (mob && time) {
+        console.log('Valid parameters detected. Processing.', mobid, time);
+        selectMob(mob, time, 10);
+    }
+    else {
+        console.log('Valid parameters NOT detected. Skipping.');
+    }
+}
+
+main();

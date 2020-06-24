@@ -7,10 +7,15 @@
 * Overwrite the CSS
 
   Set blue color to the reports which is reported by Faloop. Also replace the uid string to "Faloop!".
-  
+
+  <img src="images/UJSC_huntnet1.png" width="300px">
+
 * Add "Open Faloop!" link
 
   Add integration link to the S-mob reports (exclude forgiven rebellion) which is NOT reported by Faloop.
+
+  <img src="images/UJSC_huntnet2.png" width="300px">
+
   It link and lauches Faloop App in new window with following URL.
   
   https://faloop.app/[worldname]?mobid=[mobid]&time=[timeofdeath]
@@ -27,6 +32,8 @@
 
   When Faloop is launched with mobid and time URL query parametes, it tries to open the "Report" tab and set the default Time of Death.
   The user still have to confirm the input and submit the report manually, but it will reduce the chance or input mistakes.
+
+  <img src="images/UJSC_faloop.png" width="500px">
 
 ## Sample movie
 

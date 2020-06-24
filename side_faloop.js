@@ -1,4 +1,3 @@
-
 const mobs = [{
     id: 2962,
     version: "v2",
@@ -500,7 +499,7 @@ function setDefaultTOD(timeOfDeath) {
 }
 
 /**
- * Find the mob row (retry for 5 seconds in case of loading). 
+ * Find the mob row (may retry in case of loading). 
  * Open the details pane and call setDefaultTOD function.
  * @param {object} mob - target mob object
  * @param {int} timeOfDeath - time of death in unixtime millisec

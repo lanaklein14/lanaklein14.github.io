@@ -17,21 +17,29 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
       ------------ | -------------
       side_huntnet.js | https://lanaklein14.github.io/lanaklein14.github.io/side_huntnet.js
       side_faloop.js | https://lanaklein14.github.io/lanaklein14.github.io/side_faloop.js
+      
+      <img src="images/UJSC_libraries.png" width="500px">
 
    1. Close the page.
 
 1. Create rule for ffxiv-the-hunt.net
    1. Navigate to https://ffxiv-the-hunt.net/ 
    1. Click "User JavaScript and CSS" extension "+Add new" button.
-   1. Click the hamburger button (next to the save button) and check "side_huntnet.js".
    1. Enter "//" in JS pane to enable saving. Leave the CSS pane empty.
+   1. Click the hamburger button (next to the save button) and check "side_huntnet.js".
+
+      <img src="images/UJSC_rule_huntnet.png" width="500px">
+
    1. Click the save button.
    1. Close the page.
    
 1. Create rule for Faloop!
    1. Navigate to https://faloop.app/ 
    1. Click "User JavaScript and CSS" extension "+Add new" button.
-   1. Click the hamburger button (next to the save button) and check "side_faloop.js".
    1. Enter "//" in JS pane to enable saving. Leave the CSS pane empty.
+   1. Click the hamburger button (next to the save button) and check "side_faloop.js".
+
+      <img src="images/UJSC_rule_faloop.png" width="500px">
+
    1. Click the save button.
    1. Close the page.

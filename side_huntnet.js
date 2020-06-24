@@ -1,86 +1,3 @@
-
-function textToDate(text) {
-	const now = new Date();
-	const year = now.getFullYear();
-	const date0 = new Date((year-1)+'/'+text);
-	const date1 = new Date(year+'/'+text);
-	const date2 = new Date((year+1)+'/'+text);
-	let value = date0;
-	let diff = Math.abs(date0.getTime()-now.getTime());
-	if (Math.abs(date1.getTime()-now.getTime()) < diff) {
-		diff = Math.abs(date1.getTime()-now.getTime());
-		value = date1;
-	}
-	if (Math.abs(date2.getTime()-now.getTime()) < diff) {
-		diff = Math.abs(date2.getTime()-now.getTime());
-		value = date2;
-	}
-	return value;
-}
-
-document.querySelector('body').addEventListener( 'DOMNodeInserted', function ( event ) {
-
-	if( event.target.nodeName == 'SECTION' && 
-		event.target.classList.contains('clump-content')) {
-		let hasFaloopReport = false;
-		event.target.querySelectorAll('TEXT.left').forEach(textNode => {
-		    if (textNode.textContent == 'id: c4a17639-159f-...') {
-				hasFaloopReport = true;
-			    textNode.textContent = 'Faloop!';
-			}
-		});
-
-		timeTexts = Array.from(event.target.querySelectorAll('TEXT.right')).map(text => {
-			return textToDate(text.textContent);
-		})
-		const length = timeTexts.length;
-		if (length > 0) {
-			const index = Math.floor((length+1)/2)-1;
-			let mean = timeTexts[index].getTime();
-			if (timeTexts.length % 2 === 0) {
-				mean = Math.floor((mean + timeTexts[index+1].getTime())/2);
-			}
-			console.log(mean);
-			console.log(new Date(mean));
-			if (!hasFaloopReport && currentmobid !== 0) {
-				const world = document.querySelector('#selected-world').textContent;
-				let div = document.createElement('div');
-				div.classList.add("score");
-				let link = document.createElement('a');
-				link.target= '_blank';
-				link.href= `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;
-				link.innerText = `Open Faloop!`;
-			    event.target.appendChild(div);
-			    div.appendChild(link);
-			}
-		}
-	}
-}, false );
-
-let currentmobid = 0;
-  
-document.querySelector('body').addEventListener(
-	'mouseover', function (event) {
-	var timelineElement = event.target.closest('div.timeline');
-	if (timelineElement) {
-		const title = timelineElement.querySelector('h3.mob-name').getAttribute('title');
-		let mob = mobs.find(m => {
-			return (m.name_ja == title ||
-					m.name_en == title ||
-					m.name_fr == title ||
-					m.name_de == title);
-		});
-		if (mob) {
-			currentmobid = mob.id;
-			console.log(mob.id, mob.name_ja);
-		}
-		else {
-			currentmobid = 0;
-			console.log("not found");
-		} 
-	}
-}, false);
-
 const mobs = [{
     id: 2962,
     version: "v2",
@@ -535,3 +452,107 @@ const mobs = [{
     name_ja: "グニット",
     name_de: "Gunitt"
 }];
+
+/**
+ * Generate date object with the year nearest to current date.
+ * @param {string} text - date in format 'M/d H:mm'
+ * @return date object
+ */
+function textToDate(text) {
+	const now = new Date();
+	const year = now.getFullYear();
+	const date0 = new Date((year-1)+'/'+text);
+	const date1 = new Date(year+'/'+text);
+	const date2 = new Date((year+1)+'/'+text);
+	let value = date0;
+	let diff = Math.abs(date0.getTime()-now.getTime());
+	if (Math.abs(date1.getTime()-now.getTime()) < diff) {
+		diff = Math.abs(date1.getTime()-now.getTime());
+		value = date1;
+	}
+	if (Math.abs(date2.getTime()-now.getTime()) < diff) {
+		diff = Math.abs(date2.getTime()-now.getTime());
+		value = date2;
+	}
+	return value;
+}
+
+/**
+ * Main function
+ */
+function main() {
+
+    // Set style
+    const style = document.createElement('style');
+    style.appendChild(document.createTextNode(`
+    .uid-c4a17639-159f-4403-9bac-b4c2ddc278fd > rect, 
+    circle.uid-c4a17639-159f-4403-9bac-b4c2ddc278fd {
+        fill: #5580C8 !important;
+    }`
+    ));
+    document.querySelector('head').appendChild(style);
+
+    let currentmobid = 0;
+  
+    document.querySelector('body').addEventListener(
+        'mouseover', function (event) {
+        var timelineElement = event.target.closest('div.timeline');
+        if (timelineElement) {
+            const title = timelineElement.querySelector('h3.mob-name').getAttribute('title');
+            let mob = mobs.find(m => {
+                return (m.name_ja == title ||
+                        m.name_en == title ||
+                        m.name_fr == title ||
+                        m.name_de == title);
+            });
+            if (mob) {
+                currentmobid = mob.id;
+                console.log(mob.id, mob.name_en);
+            }
+            else {
+                currentmobid = 0;
+                console.log("not found");
+            } 
+        }
+    }, false);
+    
+    document.querySelector('body').addEventListener( 'DOMNodeInserted', function ( event ) {
+        if( event.target.nodeName == 'SECTION' && 
+            event.target.classList.contains('clump-content')) {
+            let hasFaloopReport = false;
+            event.target.querySelectorAll('TEXT.left').forEach(textNode => {
+                if (textNode.textContent == 'id: c4a17639-159f-...') {
+                    hasFaloopReport = true;
+                    textNode.textContent = 'Faloop!';
+                }
+            });
+    
+            timeTexts = Array.from(event.target.querySelectorAll('TEXT.right')).map(text => {
+                return textToDate(text.textContent);
+            })
+            const length = timeTexts.length;
+            if (length > 0) {
+                const index = Math.floor((length+1)/2)-1;
+                let mean = timeTexts[index].getTime();
+                if (timeTexts.length % 2 === 0) {
+                    mean = Math.floor((mean + timeTexts[index+1].getTime())/2);
+                }
+                console.log(mean);
+                console.log(new Date(mean));
+                if (!hasFaloopReport && currentmobid !== 0) {
+                    const world = document.querySelector('#selected-world').textContent;
+                    let div = document.createElement('div');
+                    div.classList.add("score");
+                    let link = document.createElement('a');
+                    link.target= '_blank';
+                    link.href= `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;
+                    link.innerText = `Open Faloop!`;
+                    event.target.appendChild(div);
+                    div.appendChild(link);
+                }
+            }
+        }
+    }, false );
+}
+
+main();

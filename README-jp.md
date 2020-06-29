@@ -39,7 +39,7 @@
 
 https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
-## インストール手順 ("User JavaScript and CSS" extensionを使用する場合)
+## 導入手順 (PC版Chrome + "User JavaScript and CSS" 拡張機能を使う場合)
 
 1. 前提拡張機能のインストール
    1. [User JavaScript and CSS](https://chrome.google.com/webstore/detail/user-javascript-and-css/nbhcbdghjpllgmfilhnhkllmkecfmpld) 拡張機能をChromeにインストールします。
@@ -79,6 +79,21 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
    1. Saveボタンをクリックします。
    1. ページを閉じます。
 
+## 導入手順 (ios版mobile safari + ショートカットを使う場合)
+
+ショートカット機能はios13以降から使える標準機能です。
+
+1. ショートカットのインポート
+   1. https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19 をクリックします。
+      上手く行くとショートカットアプリに「HuntFaloop」というショートカットが作成されます。
+
+1. 連携の実行
+   1. Safariで https://ffxiv-the-hunt.net/ を開きます。
+   1. 共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。初回はアクセス許可を聞かれるので「許可」します。
+      面倒ですが、この操作はページをリロードするたびに毎回実行する必要があります。
+   1. Open Faloop! リンクから https://faloop.app/ を開きます。
+   1. こちらでも、共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択する必要があります。           
+   
 ## 注意事項
 
 * 利用者は、あらかじめFaloop!を「報告者」権限で開けるようにしておく必要があります。

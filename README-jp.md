@@ -84,7 +84,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 ショートカットはios13以降から使える標準アプリです。
 
 1. ショートカットのインポート
-   1. iOSのデバイスで https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19 のリンクをクリックします。
+   1. iOSのデバイスで [HuntFaloopショートカット](https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19) のリンクをクリックします。
    1. 「Get Shortcut」ボタンをクリックして、ショートカットアプリに「HuntFaloop」を取り込みます。
 
 1. 連携の実行

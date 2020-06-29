@@ -85,14 +85,14 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
 1. ショートカットのインポート
    1. https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19 をクリックします。
-      上手く行くとショートカットアプリに「HuntFaloop」というショートカットが作成されます。
+      ショートカットアプリに「HuntFaloop」というショートカットが追加されます。
 
 1. 連携の実行
    1. Safariで https://ffxiv-the-hunt.net/ を開きます。
    1. 共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。初回はアクセス許可を聞かれるので「許可」します。
-      面倒ですが、この操作はページをリロードするたびに毎回実行する必要があります。
+      面倒ですが、この操作はページをリロードするたびに毎回実行する必要がある(ショートカット機能の仕様の)ようです。
    1. Open Faloop! リンクから https://faloop.app/ を開きます。
-   1. こちらでも、共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択する必要があります。           
+   1. こちらでも、共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。
    
 ## 注意事項
 

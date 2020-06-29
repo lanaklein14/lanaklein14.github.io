@@ -85,7 +85,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
 1. ショートカットのインポート
    1. iOSのデバイスで https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19 のリンクをクリックします。
-   2.「Get Shortcut」をクリックして、ショートカットアプリに「HuntFaloop」というショートカットを追加します。
+   1.「Get Shortcut」をクリックして、ショートカットアプリに「HuntFaloop」というショートカットを追加します。
 
 1. 連携の実行
    1. Safariで https://ffxiv-the-hunt.net/ を開きます。

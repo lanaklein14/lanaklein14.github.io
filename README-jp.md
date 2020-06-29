@@ -98,7 +98,8 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
    1. 共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。初回はアクセス許可を聞かれるので「許可」します。
       面倒ですが、この操作はページをリロードするたびに毎回実行する必要があるようです。(ショートカット機能の仕様)
    1. Open Faloop! リンクから https://faloop.app/ を開きます。
-   1. こちらでも、共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。
+   1. faloopのサイトが表示されたら、こちらでも共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。
+      面倒ですが、この操作は。。。以下同文。
    
 ## 注意事項
 

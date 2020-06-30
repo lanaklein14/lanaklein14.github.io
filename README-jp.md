@@ -83,7 +83,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
 ショートカットはiOS13以降から使える標準アプリです。
 
-また、導入にあたってはiOSデフォルトでは許可されていない「信頼されていないショートカットの許可」を有効にする必要があるので、趣旨を十分理解したうえでご利用ください。
+また、導入にあたってはiOSデフォルトでは許可されていない「信頼されていないショートカットの許可」を(一度)有効にする必要があるので、趣旨を十分理解したうえでご利用ください。
 
 1. ショートカットのインポート
    1. iOSのデバイスで、こちらの [HuntFaloopショートカット](https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19) のリンクをクリックします。
@@ -94,6 +94,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
       https://usedoor.jp/howto/digital/iphone-ipad/ios-shortcut-security-kyoka/
 
       一度、連携の実行を失敗させてからでないと選べない可能性があるので注意してください。
+      なお、一度連携を成功させた後であれば、再度許可をOFFに戻しても動作するようです。
 
 1. 連携の実行
    1. Safariで https://ffxiv-the-hunt.net/ を開きます。

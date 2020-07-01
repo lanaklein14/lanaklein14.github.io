@@ -2,8 +2,8 @@
 // @name     HuntFaloop
 // @namespace       https://entereal.co.jp
 // @description  Script for ffxiv-the-hunt.net -> faloop integration
-// @include      http://ffxiv-the-hunt.net/*
-// @include      http://faloop.app/*
+// @include      https://ffxiv-the-hunt.net/*
+// @include      https://faloop.app/*
 // @version  1.0
 // ==/UserScript==
 const mobs = [{

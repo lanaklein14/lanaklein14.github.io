@@ -316,13 +316,6 @@ function main_huntnet() {
                 }
             }
         }
-    
-        
-/*        alert('nodeList Changed');
-        records.forEach(record => {
-        });
-    */
-   
     });
     observer.observe(body, {
         childList: true
@@ -371,6 +364,10 @@ function setDefaultTOD(timeOfDeath) {
     }
     for (let i = 0; i < minutes; i++) {
         button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+    const submit = detailPane.querySelector('button.ActionButtons_action__T36M5.btn.btn-danger');
+	if (submit) {
+        submit.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
 }
 

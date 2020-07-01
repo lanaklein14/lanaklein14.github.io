@@ -1,7 +1,10 @@
 // ==UserScript==
 // @name     HuntFaloop
-// @version  1
-// @grant    none
+// @namespace       https://entereal.co.jp
+// @description  Script for ffxiv-the-hunt.net -> faloop integration
+// @include      http://ffxiv-the-hunt.net/*
+// @include      http://faloop.app/*
+// @version  1.0
 // ==/UserScript==
 const mobs = [{
     id: 2962,

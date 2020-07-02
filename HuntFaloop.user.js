@@ -251,7 +251,7 @@ function main_huntnet() {
     // Set style
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(`
-    .uid-c4a17639-159f-4403-9bac-b4c2ddc278fd > rect, 
+    .uid-c4a17639-159f-4403-9bac-b4c2ddc278fd > rect,
     circle.uid-c4a17639-159f-4403-9bac-b4c2ddc278fd {
         fill: #5580C8 !important;
     }`
@@ -291,7 +291,7 @@ function main_huntnet() {
                 }
             });
 
-            timeTexts = Array.from(popup.querySelectorAll('.right')).map(text => {
+            const timeTexts = Array.from(popup.querySelectorAll('.right')).map(text => {
                 return textToDate(text.textContent);
             })
             const length = timeTexts.length;
@@ -372,7 +372,7 @@ function setDefaultTOD(timeOfDeath) {
 }
 
 /**
- * Find the mob row (may retry in case of loading). 
+ * Find the mob row (may retry in case of loading).
  * Open the details pane and call setDefaultTOD function.
  * @param {object} mob - target mob object
  * @param {int} timeOfDeath - time of death in unixtime millisec

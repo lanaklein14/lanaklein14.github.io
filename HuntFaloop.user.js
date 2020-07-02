@@ -305,7 +305,7 @@ function main_huntnet() {
                 console.log(new Date(mean));
                 if (!hasFaloopReport && currentmobid !== 0) {
                     const world = document.querySelector('#selected-world').textContent;
-                    const oldLink = popup.querySelector('div.faloop'');
+                    const oldLink = popup.querySelector('div.faloop');
 		    if (oldLink) {
 			oldLink.parentNode.removeChild(oldLink);
 		    }

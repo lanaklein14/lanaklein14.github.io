@@ -105,7 +105,18 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
    1. faloopのサイトが表示されたら、こちらでも共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。
    
       面倒ですが、この操作もページをリロードするたびに毎回実行する必要があります。
-   
+
+## 導入手順 (PC/Android版Firefox + "Greasemonkey" アドオンを使う場合)
+
+1. 前提アドオンのインストール
+   1. Firefoxのアドオンメニューから「greasemonkey」で検索するなどして、[Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/?src=search) のページを開きインストールを実行します。
+
+1. 連携用ユーザースクリプトのインポート
+   1. Firefoxで [こちら](https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js) をクリックします。
+   1. 次のような確認ダイアログが表示されるので「インストール」をクリックします。
+
+      <img src="images/UJSC_Greasemonkey.png" width="300px">
+
 ## 注意事項
 
 * 利用者は、あらかじめFaloop!を「報告者」権限で開けるようにしておく必要があります。

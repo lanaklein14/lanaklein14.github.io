@@ -39,6 +39,29 @@
 
 https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
+## 導入手順 (PC版Chrome + "Tampermonkey" 拡張機能を使う場合)
+
+1. 前提拡張機能のインストール
+   1. [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) 拡張機能をChromeにインストールします。
+
+1. 連携用ユーザースクリプトのインポート
+   1. Chromeで [こちら](https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js) をクリックします。
+   1. 次のような確認画面が表示されるので「インストール」をクリックします。
+
+      <img src="images/UJSC_Tampermonkey.png" width="300px">
+
+## 導入手順 (PC/Android版Firefox + "Greasemonkey" or "Tampermonkey" アドオンを使う場合)
+
+1. 前提アドオンのインストール
+   1. Firefoxで [Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/) または [Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/tampermonkey/)
+   のアドオンページを開きインストールを実行します。両者のどちらか一方をインストールすればOKです。
+
+1. 連携用ユーザースクリプトのインポート
+   1. Firefoxで [こちら](https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js) をクリックします。
+   1. 次のような確認画面が表示されるので「インストール」をクリックします。(例はGreasemonkeyを有効にしている場合)
+
+      <img src="images/UJSC_Greasemonkey.png" width="300px">
+
 ## 導入手順 (PC版Chrome + "User JavaScript and CSS" 拡張機能を使う場合)
 
 1. 前提拡張機能のインストール
@@ -105,17 +128,6 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
    1. faloopのサイトが表示されたら、こちらでも共有ボタンをクリックし、一番下に表示される「HuntFaloop」を選択します。
    
       面倒ですが、この操作もページをリロードするたびに毎回実行する必要があります。
-
-## 導入手順 (PC/Android版Firefox + "Greasemonkey" アドオンを使う場合)
-
-1. 前提アドオンのインストール
-   1. Firefoxのアドオンメニューから「greasemonkey」で検索するなどして、[Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/?src=search) のページを開きインストールを実行します。
-
-1. 連携用ユーザースクリプトのインポート
-   1. Firefoxで [こちら](https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js) をクリックします。
-   1. 次のような確認ダイアログが表示されるので「インストール」をクリックします。
-
-      <img src="images/UJSC_Greasemonkey.png" width="300px">
 
 ## 注意事項
 

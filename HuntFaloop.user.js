@@ -303,10 +303,11 @@ function main_huntnet() {
                 }
                 console.log(mean);
                 console.log(new Date(mean));
-                if (!hasFaloopReport && currentmobid !== 0) {
+                if (!hasFaloopReport && currentmobid !== 0 && !popup.querySelector('div.faloop')) {
                     const world = document.querySelector('#selected-world').textContent;
-		    let div = document.createElement('div');
-                    div.classList.add("score");
+                    let div = document.createElement('div');
+                    div.classList.add('score');
+                    div.classList.add('faloop');
                     let link = document.createElement('a');
                     link.target = '_blank';
                     link.href = `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;

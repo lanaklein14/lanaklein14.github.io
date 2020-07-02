@@ -43,9 +43,9 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
   OS | ブラウザ | 前提拡張機能 | コメント
   ------------ | ------------- | ------------- | -------------
-  PC | Chrome | Temparmonkey | お勧め
-  PC | Firefox | Greasemonkey または Temparmonkey | お勧め
-  Android | Firefox | Greasemonkey または Temparmonkey | お勧め
+  PC | Chrome | Tampermonkey | お勧め
+  PC | Firefox | Greasemonkey または Tampermonkey | お勧め
+  Android | Firefox | Greasemonkey または Tampermonkey | お勧め
   PC | Chrome | User Javascript and CSS | 
   iOS | Safari | ショートカット(ios13以降) | 
 

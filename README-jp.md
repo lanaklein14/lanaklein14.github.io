@@ -39,6 +39,16 @@
 
 https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
+## 実行環境
+
+  OS | ブラウザ | 前提拡張機能 | コメント
+  ------------ | ------------- | ------------- | -------------
+  PC | Chrome | Temparmonkey | お勧め
+  PC | Firefox | Greasemonkey または Temparmonkey | お勧め
+  Android | Firefox | Greasemonkey または Temparmonkey | お勧め
+  PC | Chrome | User Javascript and CSS | 
+  iOS | Safari | ショートカット(ios13以降) | 
+
 ## 導入手順 (PC版Chrome + "Tampermonkey" 拡張機能を使う場合)
 
 1. 前提拡張機能のインストール

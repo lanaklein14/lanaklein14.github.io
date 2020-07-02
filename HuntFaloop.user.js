@@ -305,8 +305,13 @@ function main_huntnet() {
                 console.log(new Date(mean));
                 if (!hasFaloopReport && currentmobid !== 0) {
                     const world = document.querySelector('#selected-world').textContent;
-                    let div = document.createElement('div');
+                    const oldLink = popup.querySelector('div.faloop'');
+		    if (oldLink) {
+			oldLink.parentNode.removeChild(oldLink);
+		    }
+		    let div = document.createElement('div');
                     div.classList.add("score");
+                    div.classList.add("faloop");
                     let link = document.createElement('a');
                     link.target = '_blank';
                     link.href = `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;

@@ -37,7 +37,7 @@
 
 ## サンプルムービー
 
-https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
+https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4 (deprecated)
 
 ## 実行環境
 

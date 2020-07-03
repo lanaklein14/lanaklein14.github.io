@@ -79,12 +79,11 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
 
 1. 連携用ユーザースクリプトのインポート
    1. "User JavaScript and CSS" 拡張機能の歯車アイコンをクリックしてトップページを表示します。
-   1. "Libraries" タブで、次の2つのjavascriptファイルを追加します。
+   1. "Libraries" タブで、次のjavascriptファイルを追加します。
    
       Name | URL
       ------------ | -------------
-      side_huntnet.js | https://lanaklein14.github.io/lanaklein14.github.io/side_huntnet.js
-      side_faloop.js | https://lanaklein14.github.io/lanaklein14.github.io/side_faloop.js
+      HuntFaloop | https://lanaklein14.github.io/lanaklein14.github.io/HuntFaloop.user.js
       
       <img src="images/UJSC_libraries.png" width="500px">
 
@@ -94,7 +93,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
    1. https://ffxiv-the-hunt.net/ を開きます。
    1. "User JavaScript and CSS" 拡張機能の "+Add new"ボタンをクリックします。
    1. JSペインに"//"と入力してセーブできる状態にします。CSSペインは空で構いません。
-   1. Saveボタンの隣にあるボタンをクリックして、"side_huntnet.js"にチェックを付けます。
+   1. Saveボタンの隣にあるボタンをクリックして、"HuntFaloop"にチェックを付けます。
 
       <img src="images/UJSC_rule_huntnet.png" width="500px">
 
@@ -105,7 +104,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4
    1. https://faloop.app/ を開きます。
    1. "User JavaScript and CSS" 拡張機能の "+Add new"ボタンをクリックします。
    1. JSペインに"//"と入力してセーブできる状態にします。CSSペインは空で構いません。
-   1. Saveボタンの隣にあるボタンをクリックして、"side_faloop.js"にチェックを付けます。
+   1. Saveボタンの隣にあるボタンをクリックして、"HuntFaloop"にチェックを付けます。
 
       <img src="images/UJSC_rule_faloop.png" width="500px">
 

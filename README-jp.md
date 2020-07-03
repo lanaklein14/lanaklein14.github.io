@@ -39,7 +39,7 @@
 
 https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4 (deprecated)
 
-## 実行環境
+## 動作確認環境
 
   OS | ブラウザ | 前提拡張機能 | コメント
   ------------ | ------------- | ------------- | -------------

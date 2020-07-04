@@ -118,7 +118,7 @@ https://lanaklein14.github.io/lanaklein14.github.io/hunt-faloop-integration.mp4 
 また、導入にあたってはiOSデフォルトでは許可されていない「信頼されていないショートカットの許可」を(一度)有効にする必要があるので、趣旨を十分理解したうえでご利用ください。
 
 1. ショートカットのインポート
-   1. iOSのデバイスで、こちらの [HuntFaloopショートカット](https://www.icloud.com/shortcuts/8764865e738b4d0fa6b26025ebf73f19) のリンクをクリックします。
+   1. iOSのデバイスで、こちらの [HuntFaloopショートカット](https://www.icloud.com/shortcuts/da3f0bfe7584418c9c10fe5c227c226e) のリンクをクリックします。
    1. 「Get Shortcut」ボタンをクリックして、ショートカットアプリに「HuntFaloop」を取り込みます。
 
 1. ショートカットを受け入れるように許可設定

@@ -35,7 +35,7 @@
             box-sizing: border-box;
         }
 
-        pre {
+        #ddFooter, pre, #traplist {
             word-break: break-all;
             white-space: pre-wrap;
             background: rgba(0, 0, 0, 0.7);
@@ -47,9 +47,127 @@
         canvas {
             background: rgba(0.5, 0.5, 0.5, 0.7);
         }
+
+        #ddHeader {
+            font-family: "Helvetica Neue",
+                Arial,
+                "Hiragino Kaku Gothic ProN",
+                "Hiragino Sans",
+                Meiryo,
+                sans-serif;
+            font-size: 20px;
+            color: #ffffff;
+            padding: 3px;
+            background: rgba(0, 0, 255, 1.0);
+        }
+        #ddHeader.passageok {
+            background: rgba(255, 0, 0, 1.0);
+        }
+
     </style>
     <script src="https://ngld.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
     <script>
+
+        class Room {
+            constructor(left, top, right, bottom) {
+                this.width = right - left;
+                this.height = bottom - top;
+                this.left = left;
+                this.top = top;
+                this.right = right;
+                this.bottom = bottom;
+                this.isActive = false;
+            }
+            draw(ctx, poss) {
+                const idx = poss.findIndex(p=>{
+                    return (this.left < p.PosX && p.PosX < this.right && 
+                        this.top < p.PosY && p.PosY < this.bottom);
+                });
+                if (idx>=0) {
+                    this.isActive = true;
+                }
+                ctx.fillStyle = this.isActive ? 
+                "rgba(" + [200, 200, 150, 0.30] + ")":
+                "rgba(" + [128, 128, 255, 0.10] + ")";
+                ctx.fillRect(this.left, this.top, this.right-this.left, this.bottom-this.top);
+            }
+        }
+        class DDManager {
+            constructor() {
+                this.inDD = false;
+                this.floor = 0;
+                this.countKill = 0;
+                this.passageOk = false;
+                this.zoneID = 0;
+                this.rooms = [
+                    new Room(-306, 163, -270, 206),
+                    new Room(-388, 396, -345, 432),
+                    new Room(-375, 340, -337, 376),
+                    new Room(-427, 340, -389, 376),
+                    new Room(400, -272, 437, -236),
+                    new Room(-393, 170, -357, 206),
+                    new Room(-419, 227, -383, 261),
+                    new Room(166, -318, 202, -282),
+                    new Room(-325, -245, -275, -195),
+                    new Room(-318, -326, -282, -288),
+                    new Room(-338, 398, -302, 433),
+                    new Room(412, -330, 448, -294),
+                    new Room(360, -214, 395, -178),
+                    new Room(-252, 352, -218, 385),
+                    new Room(-241, 409, -205, 444),
+                    new Room(351, -362, 385, -328),
+                    new Room(347, -316, 389, -282),
+                    new Room(351, -272, 385, -236),
+                    new Room(225, -305, 259, -270),
+                    new Room(225, -259, 259, -225),
+                    new Room(225, -204, 259, -162),
+                    new Room(283, -259, 317, -225),
+                    new Room(409, -382, 443, -339),
+                    new Room(370, -422, 406, -386),
+                    new Room(-197, 352, -163, 388),
+                    new Room(-317, 341, -283, 376),
+                    new Room(-317, 279, -283, 320),
+                    new Room(-240, 184, -205, 217),
+                    new Room(-252, 239, -218, 273),
+                    new Room(-317, 227, -283, 261),
+                    new Room(-372, 227, -338, 261),
+                    new Room(-201, 238, -156, 274),
+                    new Room(283, -317, 317, -282),
+                    new Room(295, -375, 329, -340),
+                    new Room(-199, 292, -163, 335),
+                    new Room(-253, 297, -217, 331),
+                    new Room(301, -201, 336, -167),
+                    new Room(166, -248, 204, -213),
+                    new Room(235, -363, 271, -327),
+                    new Room(224, -422, 260, -384),
+                    new Room(181, -363, 217, -327),
+                    new Room(270, -432, 317, -397),
+                    new Room(-438, 281, -396, 317),
+                    new Room(-384, 283, -350, 317)
+                ];
+                this.trapPredictions = [];
+            }
+
+            updateHeader() {
+                const header = document.querySelector('#ddHeader');
+                if (this.inDD) {
+                    let textOk = ''
+                    if (this.passageOk) {
+                        textOk = ' - 転移OK';
+                        header.classList.add('passageok');
+                    }
+                    else {
+                        header.classList.remove('passageok');
+                    }
+                    header.textContent = `死者の宮殿 B${this.floor}F:${this.countKill}${textOk}`
+                }
+                else {
+                    header.textContent = `死者の宮殿の外 (Zone:${this.zoneID})`;
+                }
+            }
+        }
+        let ddManager = new DDManager();
+
         document.addEventListener("onOverlayStateUpdate", function (e) {
             if (!e.detail.isLocked) {
                 displayResizeHandle();
@@ -66,104 +184,120 @@
             document.documentElement.classList.remove("resizeHandle");
         }
 
-        class Room {
-            constructor(left, top, right, bottom) {
-                this.left = left;
-                this.top = top;
-                this.right = right;
-                this.bottom = bottom;
-            }
-            draw(ctx, poss) {
-                const idx = poss.findIndex(p=>{
-                    return (this.left < p.PosX && p.PosX < this.right && 
-                        this.top < p.PosY && p.PosY < this.bottom);
-                });
-                ctx.fillStyle = idx>=0 ? "#FFFFFF88" : "#88888888";
-                ctx.fillRect(this.left, this.top, this.right-this.left, this.bottom-this.top);
-            }
 
-        }
-
-        var rooms = [
-            new Room(-306, 163, -270, 206),
-            new Room(-388, 396, -345, 432),
-            new Room(-375, 340, -337, 376),
-            new Room(-427, 340, -389, 376),
-            new Room(400, -272, 437, -236),
-            new Room(-393, 170, -357, 206),
-            new Room(-419, 227, -383, 261),
-            new Room(166, -318, 202, -282),
-            new Room(-325, -245, -275, -195),
-            new Room(-318, -326, -282, -288),
-            new Room(-338, 398, -302, 433),
-            new Room(412, -330, 448, -294),
-            new Room(360, -214, 395, -178),
-            new Room(-252, 352, -218, 385),
-            new Room(-241, 409, -205, 444),
-            new Room(351, -362, 385, -328),
-            new Room(347, -316, 389, -282),
-            new Room(351, -272, 385, -236),
-            new Room(225, -305, 259, -270),
-            new Room(225, -259, 259, -225),
-            new Room(225, -204, 259, -162),
-            new Room(283, -259, 317, -225),
-            new Room(409, -382, 443, -339),
-            new Room(370, -422, 406, -386),
-            new Room(-197, 352, -163, 388),
-            new Room(-317, 341, -283, 376),
-            new Room(-317, 279, -283, 320),
-            new Room(-240, 184, -205, 217),
-            new Room(-252, 239, -218, 273),
-            new Room(-317, 227, -283, 261),
-            new Room(-372, 227, -338, 261),
-            new Room(-201, 238, -156, 274),
-            new Room(283, -317, 317, -282),
-            new Room(295, -375, 329, -340),
-            new Room(-199, 292, -163, 335),
-            new Room(-253, 297, -217, 331),
-            new Room(301, -201, 336, -167),
-            new Room(166, -248, 204, -213),
-            new Room(235, -363, 271, -327),
-            new Room(224, -422, 260, -384),
-            new Room(181, -363, 217, -327),
-            new Room(270, -432, 317, -397),
-            new Room(-384, 283, -350, 317)
+        var dangerMobs = [
+            'パレス・ジズ', // B1
+            'ロストゴブリン', // B1
+            'パレス・ダングビートル', // B1
+            'パレス・プリン', // B11
+            'パレス・コブラ', // B11
+            'パレス・ビロコ', // B11
+            'パレス・デュラハン', // B21
+            'パレス・ミノタウロス', // B21
+            'パレス・スカネテ', // B21
+            'パレス・サキュバス', // B31
+            'パレス・カトブレパス', // B31
+            'パレス・グルマン', // B31
+            'パレス・マンティコア', // B41
+            'パレス・レイス', // B41
+            'パレス・グレイブキーパー', // B41
+            'パレス・アヌビス', // B51
+            'パレス・マナアイドル', // B51
+            'パレス・アークデーモン', // B51
+            'パレス・エルブスト', // B61
+            'パレス・ブレードビネガロン', // B61
+            'パレス・ミロドン', // B61
+            'パレス・アンズー', // B71
+            'パレス・サイクロプス', // B71
+            'バード・オブ・パレス', // B71
+            'パレス・ワモーラ', // B81
+            'パレス・ハパリット', // B81
+            'パレス・キマイラ', // B81
+            'パレス・レイス', // B91
+            'パレス・アイアンコース', // B91
+            'パレス・グレイブキーパー', // B91
+            'ディープパレス・ジズ', // B101
+            'ディープパレス・アドベンチャラー', // B101
+            'ディープパレス・ダングビートル', // B101
+            'ディープパレス・ギガントード', // B111
+            'ディープパレス・コブラ', // B111
+            'ディープパレス・ビロコ', // B111
+            'ディープパレス・デュラハン', // B121
+            'ディープパレス・ミノタウルス', // B121
+            'ディープパレス・スカネテ', // B121
+            'ディープパレス・グルマン', // B131
+            'ディープパレス・アーリマン', // B131
+            'ディープパレス・カトブレパス', // B131
+            'ディープパレス・マンティコア', // B141
+            'ディープパレス・レイス', // B141
+            'ディープパレス・キーパー', // B141
+            'ディープパレス・シュワブチ', // B151
+            'ディープパレス・マロリス', // B151
+            'ディープパレス・アークデーモン', // B151
+            'ディープパレス・トゥルスス', // B161
+            'ディープパレス・ビネガロン', // B161
+            'ディープパレス・プテラノドン', // B161
+            'ディープパレス・スノウクロプス', // B171
+            'ディープパレス・ウィセント', // B171
+            'バード・オブ・ディープパレス', // B171
+            'ディープパレス・ワモーラ', // B181
+            'ディープパレス・ガルム', // B181
+            'ディープパレス・ヴィンドスルス', // B181
+            'ディープパレス・アイアンコース', // B191
+            'ディープパレス・ファハン', // B191
+            'ディープパレス・キーパー', // B191
         ]
 
+        var mimicMob = 'ミミック'; //'パレス・デスマウス';
+        var pigmaiMob = 'ピグマイオイ'; //'パレス・スプライト';
+
         var scale = 1.2;
-        var imgTresureB = new Image();
-        imgTresureB.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/tresureB.svg';
-        var imgTresureR = new Image();
-        imgTresureR.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/tresureR.svg';
-        var imgKey = new Image();
-        imgKey.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/key.svg';
-        var imgRaise = new Image();
-        imgRaise.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/raise.svg';
+        var imgCairnOfPassage = new Image();
+        var imgCairnOfReturn = new Image();
+        var imgTresureGold = new Image();
+        var imgTresureSilver = new Image();
+        var imgTresureBronze = new Image();
+        imgCairnOfPassage.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/cairnOfPassage.png';
+        imgCairnOfReturn.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/cairnOfReturn.png';
+        imgTresureGold.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/treasureGold.png';
+        imgTresureSilver.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/treasureSilver.png';
+        imgTresureBronze.src = 'https://raw.githubusercontent.com/lanaklein14/lanaklein14.github.io/master/images/treasureBronze.png';
         var count = 0;
         // CombatData イベントを購読
         addOverlayListener("onAddonExampleEmbeddedTimerFiredEvent", (e) => {
-//            document.querySelector("#encounter").innerText = JSON.stringify(e, null, 4);
+            showtraplist(e.traps);
+            //document.querySelector("#encounter").innerText = JSON.stringify(e, null, 4);
             var canvas = document.getElementById('canvas');
             if (canvas.getContext) {
 
                 var self = e.self;
 
                 var poss = e.mobs.map(m=>{return {PosX:m.PosX, PosY:m.PosY}});
-                poss = poss.concat(e.place.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
-                poss = poss.concat(e.tresures.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
+                poss = poss.concat(e.treasuresGold.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
+                poss = poss.concat(e.treasuresSilver.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
+                poss = poss.concat(e.treasuresBronze.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
+                poss.push({PosX:self.PosX, PosY:self.PosY});
+                if (e.cairnOfPassage) {
+                    poss.push({PosX:e.cairnOfPassage.PosX, PosY:e.cairnOfPassage.PosY});
+                }
+                if (e.cairnOfReturn) {
+                    poss.push({PosX:e.cairnOfReturn.PosX, PosY:e.cairnOfReturn.PosY});
+                }
 
                 var ctx = canvas.getContext('2d');
 
                 ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.fillStyle = "rgba(" + [128, 128, 255, 0.05] + ")";
+                ctx.fillRect(0,0,canvas.width,canvas.height);
 
                 ctx.save();
                 ctx.beginPath();
                 ctx.translate(canvas.width/2, canvas.height/2);
                 ctx.scale(scale, scale);
-                ctx.fillStyle = "#FFFFFF44";
+                ctx.fillStyle = "rgba(" + [0, 0, 255, 0.15] + ")";
                 ctx.fillRect(-110, -110, 220, 220);
-                ctx.fillStyle = "#00FF0044";
-                ctx.arc(0, 0, 50, 0+0.8-self.Heading, Math.PI-0.8-self.Heading);
+                ctx.fillStyle = "rgba(" + [255, 255, 64, 0.30] + ")";
+                ctx.arc(0, 0, 30, 0+1.0-self.Heading, Math.PI-1.0-self.Heading);
                 ctx.lineTo(0,0);
                 ctx.fill();
                 ctx.closePath();
@@ -174,8 +308,7 @@
                 ctx.translate(canvas.width/2, canvas.height/2);
                 ctx.scale(scale, scale);
                 ctx.translate(-self.PosX, -self.PosY);
-                ctx.fillStyle = "#FFFFFF88";
-                rooms.forEach(r => {
+                ddManager.rooms.forEach(r => {
                     r.draw(ctx, poss);
                 })
 
@@ -185,67 +318,212 @@
                     var x = m.PosX - self.PosX;
                     var y = m.PosY - self.PosY;
                     ctx.save();
-                    ctx.fillStyle = "#FF000044";
+                    if (mimicMob == m.Name) {
+                        ctx.beginPath();
+                        ctx.translate(canvas.width/2, canvas.height/2);
+                        ctx.scale(scale, scale);
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = "rgba(" + [255, 0, 0, 1.0] + ")";
+                        ctx.moveTo(x,y-3);
+                        ctx.lineTo(x,y+1);
+                        ctx.moveTo(x,y+2);
+                        ctx.lineTo(x,y+3);
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                    else if (pigmaiMob == m.Name) {
+                        ctx.beginPath();
+                        ctx.translate(canvas.width/2, canvas.height/2);
+                        ctx.scale(scale, scale);
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = "rgba(" + [127, 0, 255, 1.0] + ")";
+                        ctx.moveTo(x,y-3);
+                        ctx.lineTo(x,y+1);
+                        ctx.moveTo(x,y+2);
+                        ctx.lineTo(x,y+3);
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                    else if (dangerMobs.includes(m.Name)) {
+                        ctx.translate(canvas.width/2, canvas.height/2);
+                        ctx.scale(scale, scale);
+                        ctx.translate(x, y);
+                        ctx.beginPath();
+                        ctx.fillStyle = "rgba(" + [255, 0, 0, 0.5] + ")";
+                        ctx.arc(0, 0, 8, 0+1.0-m.Heading, Math.PI-1.0-m.Heading);
+                        ctx.lineTo(0,0);
+                        ctx.fill();
+                        ctx.closePath();
+                        ctx.beginPath();
+                        ctx.fillStyle = "rgba(" + [255, 0, 0, 1.0] + ")";
+                        ctx.arc(0, 0, 2, 0, Math.PI*2, 0);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                    else {
+                        ctx.beginPath();
+                        ctx.translate(canvas.width/2, canvas.height/2);
+                        ctx.scale(scale, scale);
+                        ctx.fillStyle = "rgba(" + [0, 255, 0, 1.0] + ")";
+                        ctx.arc(x, y, 2, 0, Math.PI*2, 0);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+
+                    ctx.restore();
+                });
+
+                e.traps.filter(t=>{return t.PosX != 0.0}).forEach(m => {
+                    var x = m.PosX - self.PosX;
+                    var y = m.PosY - self.PosY;
+                    ctx.save();
                     ctx.beginPath();
                     ctx.translate(canvas.width/2, canvas.height/2);
                     ctx.scale(scale, scale);
-                    ctx.arc(x, y, 4, 0, Math.PI*2, 0);
-                    ctx.fill();
-                    ctx.translate(-150, -150);
+                    ctx.strokeStyle = "#000000AA";
+                    ctx.moveTo(x-2,y-2);
+                    ctx.lineTo(x+2,y+2);
+                    ctx.moveTo(x+2,y-2);
+                    ctx.lineTo(x-2,y+2);
+                    ctx.stroke();
                     ctx.closePath();
                     ctx.restore();
                 });
 
-                e.place.forEach(m => {
-                    var x = m.PosX - self.PosX;
-                    var y = m.PosY - self.PosY;
+                if (e.cairnOfPassage) {
+                    var x = e.cairnOfPassage.PosX - self.PosX;
+                    var y = e.cairnOfPassage.PosY - self.PosY;
                     ctx.save();
-                    ctx.fillStyle = "#0000FFAA";
                     ctx.beginPath();
                     ctx.translate(canvas.width/2, canvas.height/2);
                     ctx.scale(scale, scale);
-                    if (m.BNpcID == 2007188) {
-                        ctx.drawImage(imgKey, x-5, y-5, 10, 10);
-                    }
-                    else {
-                        ctx.drawImage(imgRaise, x-5, y-5, 10, 10);
-                    }
-                    ctx.translate(-150, -150);
+                    ctx.drawImage(imgCairnOfPassage, x-5, y-5, 10, 10);
+                    ctx.closePath();
+                    ctx.restore();
+                }
+
+                if (e.cairnOfReturn) {
+                    var x = e.cairnOfReturn.PosX - self.PosX;
+                    var y = e.cairnOfReturn.PosY - self.PosY;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.translate(canvas.width/2, canvas.height/2);
+                    ctx.scale(scale, scale);
+                    ctx.drawImage(imgCairnOfReturn, x-5, y-5, 10, 10);
+                    ctx.closePath();
+                    ctx.restore();
+                }
+
+                e.treasuresGold.forEach(m => {
+                    var x = m.PosX - self.PosX;
+                    var y = m.PosY - self.PosY;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.translate(canvas.width/2, canvas.height/2);
+                    ctx.scale(scale, scale);
+                    ctx.drawImage(imgTresureGold, x-5, y-5, 10, 10);
                     ctx.closePath();
                     ctx.restore();
                 });
 
-                e.tresures.forEach(m => {
+                e.treasuresSilver.forEach(m => {
                     var x = m.PosX - self.PosX;
                     var y = m.PosY - self.PosY;
                     ctx.save();
-                    ctx.fillStyle = "#00FF00AA";
                     ctx.beginPath();
                     ctx.translate(canvas.width/2, canvas.height/2);
                     ctx.scale(scale, scale);
-                    if (m.BNpcID == 2007357) {
-                        ctx.drawImage(imgTresureB, x-5, y-5, 10, 10);
-                    }
-                    else {
-                        ctx.drawImage(imgTresureR, x-5, y-5, 10, 10);
-                    }
-                    ctx.translate(-150, -150);
+                    ctx.drawImage(imgTresureSilver, x-5, y-5, 10, 10);
+                    ctx.closePath();
+                    ctx.restore();
+                });
+
+                e.treasuresBronze.forEach(m => {
+                    var x = m.PosX - self.PosX;
+                    var y = m.PosY - self.PosY;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.translate(canvas.width/2, canvas.height/2);
+                    ctx.scale(scale, scale);
+                    ctx.drawImage(imgTresureBronze, x-5, y-5, 10, 10);
                     ctx.closePath();
                     ctx.restore();
                 });
 
             }
+            
+            document.querySelector("#ddFooter").textContent = 
+            `不明なトラップの数：${e.traps.filter(t=>{return t.PosX == 0.0}).length} (X:${Math.floor(self.PosX)}, Y:${Math.floor(self.PosY)})`
         });
 
+        addOverlayListener("ChangeZone", (e) => {
+            ddManager.zoneID = e.zoneID;
+            if ([561, 562, 563, 564, 565, 593, 594, 595, 596, 597,
+                 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 570].includes(ddManager.zoneID)) {
+                ddManager.inDD = true;
+                ddManager.floor = 0;
+                ddManager.countKill = 0;
+                ddManager.passageOk = false;
+                ddManager.trapPredictions = [];
+            }
+            else {
+                ddManager.inDD = false;
+                ddManager.floor = 0;
+                ddManager.countKill = 0;
+                ddManager.passageOk = false;
+                ddManager.trapPredictions = [];
+            }
+            ddManager.updateHeader();
+        });
+
+        addOverlayListener("LogLine", (e) => {
+            if (e.line[0] == '00' && e.line[2] == '0839') {
+                var result1 = new RegExp('「死者の宮殿 B(.+)～.+」の攻略を開始した。').exec(e.line[4]);
+                var result2 = new RegExp('地下(.+)階').exec(e.line[4])
+                var result3 = new RegExp('転移の石塔が起動した！').exec(e.line[4]);
+
+                if (result1) {
+                    ddManager.floor = parseInt(result1[1], 10);
+                    ddManager.countKill = 0;
+                    ddManager.passageOk = false;
+                    ddManager.rooms.forEach(r => {r.isActive = false});
+                }
+                else if (result2) {
+                    ddManager.floor = parseInt(result2[1], 10);
+                    ddManager.countKill = 0;
+                    ddManager.passageOk = false;
+                    ddManager.rooms.forEach(r => {r.isActive = false});
+                }
+                else if (result3) {
+                    ddManager.passageOk = true;
+                }
+                ddManager.updateHeader();
+            }
+            else if (e.line[0] == '00' && e.line[2] == '0b3a' && e.line[4].match(/.*を倒した。$/)) {
+                ddManager.countKill += 1;
+                ddManager.updateHeader();
+            }
+        });
         startOverlayEvents();
+
+        function showtraplist(traps) {
+            var trapDIV = document.querySelector('#traplist');
+            if (trapDIV) {
+                trapDIV.innerText = JSON.stringify(traps, null, 4);
+            }
+        }
+
 
     </script>
 </head>
 <body>
 
-        <canvas id="canvas" width="300" height="300">
-            No data to show.
-        </canvas>
+    <div id="ddHeader"></div>
+    <canvas id="canvas" width="300" height="300">
+        No data to show.
+    </canvas>
+    <div id="ddFooter"></div>
+    <!--div id="traplist"></div-->
     <!--pre id="encounter">
     </pre-->
 

@@ -69,7 +69,7 @@
     <script>
 
         class Room {
-            constructor(left, top, right, bottom) {
+            constructor(left, top, right, bottom, label) {
                 this.width = right - left;
                 this.height = bottom - top;
                 this.left = left;
@@ -77,6 +77,7 @@
                 this.right = right;
                 this.bottom = bottom;
                 this.isActive = false;
+                this.label = label
             }
             draw(ctx, poss) {
                 const idx = poss.findIndex(p=>{
@@ -90,6 +91,8 @@
                 "rgba(" + [200, 200, 150, 0.30] + ")":
                 "rgba(" + [128, 128, 255, 0.10] + ")";
                 ctx.fillRect(this.left, this.top, this.right-this.left, this.bottom-this.top);
+                ctx.font = "8px Arial";
+                ctx.fillText(this.label ? this.label : '', this.left, this.top-1);
             }
         }
         class DDManager {
@@ -100,52 +103,55 @@
                 this.passageOk = false;
                 this.zoneID = 0;
                 this.rooms = [
-                    new Room(-306, 163, -270, 206),
-                    new Room(-388, 396, -345, 432),
-                    new Room(-375, 340, -337, 376),
-                    new Room(-427, 340, -389, 376),
-                    new Room(400, -272, 437, -236),
-                    new Room(-393, 170, -357, 206),
-                    new Room(-419, 227, -383, 261),
-                    new Room(166, -318, 202, -282),
-                    new Room(-325, -245, -275, -195),
-                    new Room(-318, -326, -282, -288),
-                    new Room(-338, 398, -302, 433),
-                    new Room(412, -330, 448, -294),
-                    new Room(360, -214, 395, -178),
-                    new Room(-252, 352, -218, 385),
-                    new Room(-241, 409, -205, 444),
-                    new Room(351, -362, 385, -328),
-                    new Room(347, -316, 389, -282),
-                    new Room(351, -272, 385, -236),
-                    new Room(225, -305, 259, -270),
-                    new Room(225, -259, 259, -225),
-                    new Room(225, -204, 259, -162),
-                    new Room(283, -259, 317, -225),
-                    new Room(409, -382, 443, -339),
-                    new Room(370, -422, 406, -386),
-                    new Room(-197, 352, -163, 388),
-                    new Room(-317, 341, -283, 376),
-                    new Room(-317, 279, -283, 320),
-                    new Room(-240, 184, -205, 217),
-                    new Room(-252, 239, -218, 273),
-                    new Room(-317, 227, -283, 261),
-                    new Room(-372, 227, -338, 261),
-                    new Room(-201, 238, -156, 274),
-                    new Room(283, -317, 317, -282),
-                    new Room(295, -375, 329, -340),
-                    new Room(-199, 292, -163, 335),
-                    new Room(-253, 297, -217, 331),
-                    new Room(301, -201, 336, -167),
-                    new Room(166, -248, 204, -213),
-                    new Room(235, -363, 271, -327),
-                    new Room(224, -422, 260, -384),
-                    new Room(181, -363, 217, -327),
-                    new Room(270, -432, 317, -397),
-                    new Room(-438, 281, -396, 317),
-                    new Room(-384, 283, -350, 317),
-                    new Room(275, 349, 324, 398),
-                    new Room(284, 288, 315, 317)
+                    new Room(224, -422, 260, -384, 'A1'),
+                    new Room(270, -432, 317, -397, 'A2'),
+                    new Room(370, -422, 406, -386, 'A3'),
+                    new Room(181, -363, 217, -327, 'A4'),
+                    new Room(235, -363, 271, -327, 'A5'),
+                    new Room(295, -375, 329, -340, 'A6'),
+                    new Room(351, -362, 385, -328, 'A7'),
+                    new Room(409, -382, 443, -339, 'A8'),
+                    new Room(166, -318, 202, -282, 'A9'),
+                    new Room(225, -305, 259, -270, 'A10'),
+                    new Room(283, -317, 317, -282, 'A11'),
+                    new Room(347, -316, 389, -282, 'A12'),
+                    new Room(412, -330, 448, -294, 'A13'),
+                    new Room(166, -248, 204, -213, 'A14'),
+                    new Room(225, -259, 259, -225, 'A15'),
+                    new Room(283, -259, 317, -225, 'A16'),
+                    new Room(351, -272, 385, -236, 'A17'),
+                    new Room(400, -272, 437, -236, 'A18'),
+                    new Room(225, -204, 259, -162, 'A19'),
+                    new Room(301, -201, 336, -167, 'A20'),
+                    new Room(360, -214, 395, -178, 'A21'),
+
+                    new Room(-306, 163, -270, 206, 'B1'),
+                    new Room(-393, 170, -357, 206, 'B2'),
+                    new Room(-240, 184, -205, 217, 'B3'),
+                    new Room(-419, 227, -383, 261, 'B4'),
+                    new Room(-372, 227, -338, 261, 'B5'),
+                    new Room(-317, 227, -283, 261, 'B6'),
+                    new Room(-252, 239, -218, 273, 'B7'),
+                    new Room(-201, 238, -156, 274, 'B8'),
+                    new Room(-438, 281, -396, 317, 'B9'),
+                    new Room(-384, 283, -350, 317, 'B10'),
+                    new Room(-317, 279, -283, 320, 'B11'),
+                    new Room(-253, 297, -217, 331, 'B12'),
+                    new Room(-199, 292, -163, 335, 'B13'),
+                    new Room(-427, 340, -389, 376, 'B14'),
+                    new Room(-375, 340, -337, 376, 'B15'),
+                    new Room(-317, 341, -283, 376, 'B16'),
+                    new Room(-252, 352, -218, 385, 'B17'),
+                    new Room(-197, 352, -163, 388, 'B18'),
+                    new Room(-388, 396, -345, 432, 'B19'),
+                    new Room(-338, 398, -302, 433, 'B20'),
+                    new Room(-241, 409, -205, 444, 'B21'),
+
+                    new Room(-318, -326, -282, -288, 'C1'),
+                    new Room(-325, -245, -275, -195, 'C2'),
+
+                    new Room(284, 288, 315, 317, 'D1'),
+                    new Room(275, 349, 324, 398, 'D1'),
                 ];
                 this.trapPredictions = [];
             }
@@ -167,9 +173,123 @@
                     header.textContent = `死者の宮殿の外 (Zone:${this.zoneID})`;
                 }
             }
+
+            isDangerMob(bnpcNameID) {
+                // モブ名⇒ID https://xivapi.com/search?indexes=BnpcName&string_column=Name_ja&string_algo=term&columns=ID,Name_ja&string=%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%91%E3%83%AC%E3%82%B9%E3%83%BB%E3%82%AD%E3%83%BC%E3%83%91%E3%83%BC
+                const dangerMobNameIDMap = {
+                    561: [ //B1 - B10
+                        4983, //パレス・ジズ
+                        4984, //ロストゴブリン
+                        4985, //パレス・ダングビートル
+                    ],
+                    562: [ //B11 - B20
+                        4996, //パレス・プリン
+                        4997, //パレス・コブラ
+                        4998, //パレス・ビロコ
+                    ],
+                    563: [ //B21 - B30
+                        5009, //パレス・デュラハン
+                        5010, //パレス・ミノタウロス
+                        5011, //パレス・スカネテ
+                    ],
+                    564: [ //B31 - B40
+                        5022, //ナイトメア・サキュバス
+                        5023, //ナイトメア・カトブレパス
+                        5024, //パレス・グルマン
+                    ],
+                    565: [ //B41 - B50
+                        5035, //パレス・マンティコア
+                        5354, //パレス・レイス
+                        5355, //パレス・グレイブキーパー
+                    ],
+                    593: [ //B51 - B60
+                        5302, //パレス・アヌビス
+                        5307, //パレス・マナアイドル
+                        5305, //パレス・アークデーモン
+                    ],
+                    594: [ //B61 - B70
+                        5317, //パレス・エルブスト
+                        5319, //パレス・ブレードビネガロン
+                        5316, //パレス・ミロドン
+                    ],
+                    595: [ //B71 - B80
+                        5331, //パレス・アンズー
+                        5325, //パレス・サイクロプス
+                        5324, //バード・オブ・パレス
+                    ],
+                    596: [ //B81 - B90
+                        5343, //パレス・ワモーラ
+                        5342, //パレス・ハパリット
+                        5344, //パレス・キマイラ
+                    ],
+                    597: [ //B91 - B100
+                        5354, //パレス・レイス
+                        5353, //パレス・アイアンコース
+                        5355, //パレス・グレイブキーパー
+                    ],
+                    598: [ //B101 - B110
+                        5368, //ディープパレス・ジズ
+                        5369, //ゴブリン・アドベンチャラー
+                        5370, //ディープパレス・ダングビートル
+                    ],
+                    599: [ //B111 - B120
+                        5374, //ディープパレス・ギガントード
+                        5382, //ディープパレス・コブラ
+                        5383, //ディープパレス・ビロコ
+                    ],
+                    600: [ //B121 - B130
+                        5394, //ディープパレス・デュラハン
+                        5395, //ディープパレス・ミノタウルス
+                        5396, //ディープパレス・スカネテ
+                    ],
+                    601: [ //B131 - B140
+                        5409, //ディープパレス・グルマン
+                        5402, //ディープパレス・アーリマン
+                        5408, //ディープパレス・カトブレパス
+                    ],
+                    602: [ //B141 - B150
+                        5421, //ディープパレス・マンティコア
+                        5422, //ディープパレス・レイス
+                        5423, //ディープパレス・キーパー
+                    ],
+                    603: [ //B151 - B160
+                        5432, //ディープパレス・シュワブチ
+                        5436, //ディープパレス・マロリス
+                        5434, //ディープパレス・アークデーモン
+                    ],
+                    604: [ //B161 - B170
+                        5445, //ディープパレス・トゥルスス
+                        5447, //ディープパレス・ビネガロン
+                        5448, //ディープパレス・プテラノドン
+                    ],
+                    605: [ //B171 - B180
+                        5453, //ディープパレス・スノウクロプス
+                        5451, //ディープパレス・ウィセント
+                        5452, //バード・オブ・ディープパレス
+                    ],
+                    606: [ //B181 - B190
+                        5469, //ディープパレス・ワモーラ
+                        5470, //ディープパレス・ガルム
+                        5468, //ディープパレス・ヴィンドスルス
+                    ],
+                    607: [ //B191 - B200
+                        5475, //ディープパレス・アイアンコース
+                        5473, //ディープパレス・ファハン
+                        5423, //ディープパレス・キーパー
+                    ]
+                }
+                return dangerMobNameIDMap[this.zoneID] ? dangerMobNameIDMap[this.zoneID].includes(bnpcNameID) : false;
+            }
+            isMimic(bnpcNameID) {
+                return bnpcNameID == 2566; //ミミック
+            }
+            isPygmaioi(bnpcNameID) {
+                return bnpcNameID == 5041; //ピグマイオイ
+            }
         }
         let ddManager = new DDManager();
 
+        
         document.addEventListener("onOverlayStateUpdate", function (e) {
             if (!e.detail.isLocked) {
                 displayResizeHandle();
@@ -185,73 +305,6 @@
         function hideResizeHandle() {
             document.documentElement.classList.remove("resizeHandle");
         }
-
-
-        var dangerMobs = [
-            'パレス・ジズ', // B1
-            'ロストゴブリン', // B1
-            'パレス・ダングビートル', // B1
-            'パレス・プリン', // B11
-            'パレス・コブラ', // B11
-            'パレス・ビロコ', // B11
-            'パレス・デュラハン', // B21
-            'パレス・ミノタウロス', // B21
-            'パレス・スカネテ', // B21
-            'ナイトメア・サキュバス', // B31
-            'ナイトメア・カトブレパス', // B31
-            'ナイトメア・グルマン', // B31
-            'ナイトメア・マンティコア', // B41
-            'ナイトメア・レイス', // B41
-            'ナイトメア・グレイブキーパー', // B41
-            'パレス・アヌビス', // B51
-            'パレス・マナアイドル', // B51
-            'パレス・アークデーモン', // B51
-            'パレス・エルブスト', // B61
-            'パレス・ブレードビネガロン', // B61
-            'パレス・ミロドン', // B61
-            'パレス・アンズー', // B71
-            'パレス・サイクロプス', // B71
-            'バード・オブ・パレス', // B71
-            'パレス・ワモーラ', // B81
-            'パレス・ハパリット', // B81
-            'パレス・キマイラ', // B81
-            'パレス・レイス', // B91
-            'パレス・アイアンコース', // B91
-            'パレス・グレイブキーパー', // B91
-            'ディープパレス・ジズ', // B101
-            'ディープパレス・アドベンチャラー', // B101
-            'ディープパレス・ダングビートル', // B101
-            'ディープパレス・ギガントード', // B111
-            'ディープパレス・コブラ', // B111
-            'ディープパレス・ビロコ', // B111
-            'ディープパレス・デュラハン', // B121
-            'ディープパレス・ミノタウルス', // B121
-            'ディープパレス・スカネテ', // B121
-            'ディープパレス・グルマン', // B131
-            'ディープパレス・アーリマン', // B131
-            'ディープパレス・カトブレパス', // B131
-            'ディープパレス・マンティコア', // B141
-            'ディープパレス・レイス', // B141
-            'ディープパレス・キーパー', // B141
-            'ディープパレス・シュワブチ', // B151
-            'ディープパレス・マロリス', // B151
-            'ディープパレス・アークデーモン', // B151
-            'ディープパレス・トゥルスス', // B161
-            'ディープパレス・ビネガロン', // B161
-            'ディープパレス・プテラノドン', // B161
-            'ディープパレス・スノウクロプス', // B171
-            'ディープパレス・ウィセント', // B171
-            'バード・オブ・ディープパレス', // B171
-            'ディープパレス・ワモーラ', // B181
-            'ディープパレス・ガルム', // B181
-            'ディープパレス・ヴィンドスルス', // B181
-            'ディープパレス・アイアンコース', // B191
-            'ディープパレス・ファハン', // B191
-            'ディープパレス・キーパー', // B191
-        ]
-
-        var mimicMob = 'ミミック'; //'パレス・デスマウス';
-        var pigmaiMob = 'ピグマイオイ'; //'パレス・スプライト';
 
         var scale = 1.2;
         var imgCairnOfPassage = new Image();
@@ -278,7 +331,9 @@
                 poss = poss.concat(e.treasuresGold.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
                 poss = poss.concat(e.treasuresSilver.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
                 poss = poss.concat(e.treasuresBronze.map(m=>{return {PosX:m.PosX, PosY:m.PosY}}));
-                poss.push({PosX:self.PosX, PosY:self.PosY});
+                if (e.self) {
+                    poss.push({PosX:self.PosX, PosY:self.PosY});
+                }
                 if (e.cairnOfPassage) {
                     poss.push({PosX:e.cairnOfPassage.PosX, PosY:e.cairnOfPassage.PosY});
                 }
@@ -320,7 +375,7 @@
                     var x = m.PosX - self.PosX;
                     var y = m.PosY - self.PosY;
                     ctx.save();
-                    if (mimicMob == m.Name) {
+                    if (ddManager.isMimic(m.BNpcNameID)) {
                         ctx.beginPath();
                         ctx.translate(canvas.width/2, canvas.height/2);
                         ctx.scale(scale, scale);
@@ -333,7 +388,7 @@
                         ctx.stroke();
                         ctx.closePath();
                     }
-                    else if (pigmaiMob == m.Name) {
+                    else if (ddManager.isPygmaioi(m.BNpcNameID)) {
                         ctx.beginPath();
                         ctx.translate(canvas.width/2, canvas.height/2);
                         ctx.scale(scale, scale);
@@ -346,7 +401,7 @@
                         ctx.stroke();
                         ctx.closePath();
                     }
-                    else if (dangerMobs.includes(m.Name)) {
+                    else if (ddManager.isDangerMob(m.BNpcNameID)) {
                         ctx.translate(canvas.width/2, canvas.height/2);
                         ctx.scale(scale, scale);
                         ctx.translate(x, y);

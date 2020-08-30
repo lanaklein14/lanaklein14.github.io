@@ -470,12 +470,14 @@ function setDefaultTOD(timeOfDeath) {
  * @param {int} timeOfDeath - time of death in unixtime millisec
  * @param {int} retryCount - retry count
  */
-function selectMob(worldsn, mob, timeOfDeath, retryCount) {
+function selectMob(worldsn, mob, timeOfDeath, retryCount, instanceid='') {
     let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__2Wfh0'));
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
+        const instance = t.querySelector('span.h4') != null ? t.querySelector('span.h4').textContent.toLowerCase() : '';
         const sn = t.querySelector('span.badge.d-inline').textContent.toLowerCase();
-        return (worldsn == sn &&
+        console.log(`world: ${worldsn}=${sn}`, `instance: ${instanceid}=${instance}`, `mob: ${name}=${mob.name_ja.toLowerCase()}|${mob.name_en.toLowerCase()}|${mob.name_fr.toLowerCase()}|${mob.name_de.toLowerCase()}`);
+        return (worldsn == sn && instanceid == instance &&
             (name == mob.name_ja.toLowerCase() ||
             name == mob.name_en.toLowerCase() ||
             name == mob.name_fr.toLowerCase() ||
@@ -490,7 +492,7 @@ function selectMob(worldsn, mob, timeOfDeath, retryCount) {
     else {
         if (retryCount > 0) {
             console.log(`Mob row not found. Retry(${retryCount - 1})`);
-            setTimeout(function () { selectMob(worldsn, mob, timeOfDeath, retryCount - 1) }, 1000);
+            setTimeout(function () { selectMob(worldsn, mob, timeOfDeath, retryCount - 1, instanceid) }, 1000);
         }
         else {
             console.log(`Mob row not found. Skipping.`)
@@ -507,12 +509,14 @@ function main_faloop() {
     const worldid = urlParams.get('worldid');
     const mobid = urlParams.get('mobid');
     const time = urlParams.get('time');
+    const instanceid = urlParams.get('instanceid');
     const mob = mobs.find(m => { return m.id == mobid });
     if (worldid && mob && time) {
         console.log('Valid parameters detected. Processing.', worldid, mobid, time);
         const worldsn = Object.values(worldmap).find(item => item.id == worldid).sn;
         console.log('world short name', worldsn);
-        selectMob(worldsn, mob, time, 10);
+        console.log('instanceid', instanceid);
+        selectMob(worldsn, mob, time, 10, instanceid ? instanceid : '');
     }
     else {
         console.log('Valid parameters NOT detected. Skipping.');

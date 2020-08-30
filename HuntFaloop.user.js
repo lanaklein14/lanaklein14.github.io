@@ -217,6 +217,76 @@ const mobs = [{
     name_ja: "グニット",
     name_de: "Gunitt"
 }];
+const worldnameidmap = {
+    aegis: 90,
+    atomos: 68,
+    carbuncle: 45,
+    garuda: 58,
+    gungnir: 94,
+    kujata: 49,
+    ramuh: 60,
+    tonberry: 72,
+    typhon: 50,
+    unicorn: 30,
+    alexander: 43,
+    bahamut: 69,
+    durandal: 92,
+    fenrir: 46,
+    ifrit: 59,
+    ridill: 98,
+    tiamat: 76,
+    ultima: 51,
+    valefor: 52,
+    yojimbo: 31,
+    zeromus: 32,
+    anima: 44,
+    asura: 23,
+    belias: 24,
+    chocobo: 70,
+    hades: 47,
+    ixion: 48,
+    mandragora: 82,
+    masamune: 96,
+    pandaemonium: 28,
+    shinryu: 29,
+    titan: 61,
+    adamantoise: 73,
+    balmung: 91,
+    cactuar: 79,
+    coeurl: 74,
+    faerie: 54,
+    gilgamesh: 63,
+    goblin: 81,
+    jenova: 40,
+    mateus: 37,
+    midgardsormr: 65,
+    sargatanas: 99,
+    siren: 57,
+    zalera: 41,
+    behemoth: 78,
+    brynhildr: 34,
+    diabolos: 62,
+    excalibur: 93,
+    exodus: 53,
+    famfrit: 35,
+    hyperion: 95,
+    lamia: 55,
+    leviathan: 64,
+    malboro: 75,
+    ultros: 77,
+    cerberus: 80,
+    lich: 36,
+    moogle: 71,
+    odin: 66,
+    phoenix: 56,
+    ragnarok: 97,
+    shiva: 67,
+    zodiark: 42,
+    omega: 39,
+    louisoix: 83,
+    twintania: 33,
+    spriggan: 85
+};
 let currentmobid = 0;
 
 /**
@@ -310,7 +380,7 @@ function main_huntnet() {
                     div.classList.add('faloop');
                     let link = document.createElement('a');
                     link.target = '_blank';
-                    link.href = `https://faloop.app/${world.toLowerCase()}?mobid=${currentmobid}&time=${mean}`;
+                    link.href = `https://faloop.app/${world.toLowerCase()}?worldid=${worldnameidmap[world.toLowerCase()]}&mobid=${currentmobid}&time=${mean}`;
                     link.innerText = `Open Faloop!`;
                     popup.appendChild(div);
                     div.appendChild(link);

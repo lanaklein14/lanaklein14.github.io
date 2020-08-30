@@ -1,5 +1,12 @@
 # ffxiv-the-hunt.net -> Faloop! 連携用ユーザースクリプト
 
+## はじめに
+
+2020/8/30に実施されたFaloop 3.0 Updateに合わせて、当スクリプトもアップデートする必要があります。
+アップデート手順について、プラグインによっては再読み込み機能などがあるようですが、一度削除してから追加しなおすのが一番手っ取り早いと思います。
+また、現在の仕様ではFaloopの自画面で対象のワールドが非表示にしていると、確認ダイアログが表示されません。(修正案検討中)
+ホームワールドだけを対象に運用している場合は問題になりませんが、他ワールドのHuntnet報告を適用したい場合などはFaloopの自画面でそのワールドも表示に切り替えるようご注意ください。
+
 ## 機能
 
 ### ffxiv-the-hunt.net 側の動作
@@ -18,12 +25,14 @@
 
   このリンクをクリックすると、新規のウィンドウに、次のURL形式でFaloop!を開きます。
   
-  https://faloop.app/[worldname]?mobid=[mobid]&time=[timeofdeath]
+  https://faloop.app/[datacentername]?worldid=[worldid]&mobid=[mobid](&instanceid=[instanceid])&time=[timeofdeath]
   
   パラメータ | 説明
   ------------ | -------------
-  worldname | 表示するワールド名(小文字)
+  datacentername | 表示するデータセンター名(小文字)
+  worldid | 対象のワールドID
   mobid | 対象のモブID
+  instanceid | 対象のエリアインスタンス(1～3)。対象エリアが複数インスタンスに対応している時だけ指定
   timeofdeath | 対象の討伐時刻(UNIXTIME)。hunt.net側の報告の中央値
 
 ### Faloop! 側の動作

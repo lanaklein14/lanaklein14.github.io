@@ -288,6 +288,7 @@ const worldnameidmap = {
     spriggan: 85
 };
 let currentmobid = 0;
+let instanceid = 1;
 
 /**
  * Generate date object with the year nearest to current date.
@@ -332,6 +333,7 @@ function main_huntnet() {
         var timelineElement = event.target.closest('div.timeline');
         if (timelineElement) {
             const title = timelineElement.querySelector('h3.mob-name').getAttribute('title');
+            const area = timelineElement.querySelector('div.area').innerText;
             let mob = mobs.find(m => {
                 return (m.name_ja == title ||
                     m.name_en == title ||
@@ -341,6 +343,15 @@ function main_huntnet() {
             if (mob) {
                 currentmobid = mob.id;
                 console.log(mob.id, mob.name_en);
+                if (area.endsWith('2')) {
+                    instanceid = 2;
+                }
+                else if (area.endsWith('3')) {
+                    instanceid = 3;
+                }
+                else {
+                    instanceid = 1;
+                }
             }
             else {
                 currentmobid = 0;
@@ -380,7 +391,7 @@ function main_huntnet() {
                     div.classList.add('faloop');
                     let link = document.createElement('a');
                     link.target = '_blank';
-                    link.href = `https://faloop.app/${world.toLowerCase()}?worldid=${worldnameidmap[world.toLowerCase()]}&mobid=${currentmobid}&time=${mean}`;
+                    link.href = `https://faloop.app/${world.toLowerCase()}?worldid=${worldnameidmap[world.toLowerCase()]}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`;
                     link.innerText = `Open Faloop!`;
                     popup.appendChild(div);
                     div.appendChild(link);

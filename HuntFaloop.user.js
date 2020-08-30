@@ -217,78 +217,78 @@ const mobs = [{
     name_ja: "グニット",
     name_de: "Gunitt"
 }];
-const worldnameidmap = {
-    aegis: 90,
-    atomos: 68,
-    carbuncle: 45,
-    garuda: 58,
-    gungnir: 94,
-    kujata: 49,
-    ramuh: 60,
-    tonberry: 72,
-    typhon: 50,
-    unicorn: 30,
-    alexander: 43,
-    bahamut: 69,
-    durandal: 92,
-    fenrir: 46,
-    ifrit: 59,
-    ridill: 98,
-    tiamat: 76,
-    ultima: 51,
-    valefor: 52,
-    yojimbo: 31,
-    zeromus: 32,
-    anima: 44,
-    asura: 23,
-    belias: 24,
-    chocobo: 70,
-    hades: 47,
-    ixion: 48,
-    mandragora: 82,
-    masamune: 96,
-    pandaemonium: 28,
-    shinryu: 29,
-    titan: 61,
-    adamantoise: 73,
-    balmung: 91,
-    cactuar: 79,
-    coeurl: 74,
-    faerie: 54,
-    gilgamesh: 63,
-    goblin: 81,
-    jenova: 40,
-    mateus: 37,
-    midgardsormr: 65,
-    sargatanas: 99,
-    siren: 57,
-    zalera: 41,
-    behemoth: 78,
-    brynhildr: 34,
-    diabolos: 62,
-    excalibur: 93,
-    exodus: 53,
-    famfrit: 35,
-    hyperion: 95,
-    lamia: 55,
-    leviathan: 64,
-    malboro: 75,
-    ultros: 77,
-    cerberus: 80,
-    lich: 36,
-    moogle: 71,
-    odin: 66,
-    phoenix: 56,
-    ragnarok: 97,
-    shiva: 67,
-    zodiark: 42,
-    omega: 39,
-    louisoix: 83,
-    twintania: 33,
-    spriggan: 85
+const worldmap = {
+  aegis: { id: 90, dc: 'elemental' },
+  atomos: { id: 68, dc: 'elemental' },
+  carbuncle: { id: 45, dc: 'elemental' },
+  garuda: { id: 58, dc: 'elemental' },
+  gungnir: { id: 94, dc: 'elemental' },
+  kujata: { id: 49, dc: 'elemental' },
+  ramuh: { id: 60, dc: 'elemental' },
+  tonberry: { id: 72, dc: 'elemental' },
+  typhon: { id: 50, dc: 'elemental' },
+  unicorn: { id: 30, dc: 'elemental' },
+  alexander: { id: 43, dc: 'gaia' },
+  bahamut: { id: 69, dc: 'gaia' },
+  durandal: { id: 92, dc: 'gaia' },
+  fenrir: { id: 46, dc: 'gaia' },
+  ifrit: { id: 59, dc: 'gaia' },
+  ridill: { id: 98, dc: 'gaia' },
+  tiamat: { id: 76, dc: 'gaia' },
+  ultima: { id: 51, dc: 'gaia' },
+  valefor: { id: 52, dc: 'gaia' },
+  yojimbo: { id: 31, dc: 'gaia' },
+  zeromus: { id: 32, dc: 'gaia' },
+  anima: { id: 44, dc: 'mana' },
+  asura: { id: 23, dc: 'mana' },
+  belias: { id: 24, dc: 'mana' },
+  chocobo: { id: 70, dc: 'mana' },
+  hades: { id: 47, dc: 'mana' },
+  ixion: { id: 48, dc: 'mana' },
+  mandragora: { id: 82, dc: 'mana' },
+  masamune: { id: 96, dc: 'mana' },
+  pandaemonium: { id: 28, dc: 'mana' },
+  shinryu: { id: 29, dc: 'mana' },
+  titan: { id: 61, dc: 'mana' },
+  adamantoise: { id: 73, dc: 'aether' },
+  balmung: { id: 91, dc: 'crystal' },
+  cactuar: { id: 79, dc: 'aether' },
+  coeurl: { id: 74, dc: 'crystal' },
+  faerie: { id: 54, dc: 'aether' },
+  gilgamesh: { id: 63, dc: 'aether' },
+  goblin: { id: 81, dc: 'crystal' },
+  jenova: { id: 40, dc: 'aether' },
+  mateus: { id: 37, dc: 'crystal' },
+  midgardsormr: { id: 65, dc: 'aether' },
+  sargatanas: { id: 99, dc: 'aether' },
+  siren: { id: 57, dc: 'aether' },
+  zalera: { id: 41, dc: 'crystal' },
+  behemoth: { id: 78, dc: 'primal' },
+  brynhildr: { id: 34, dc: 'crystal' },
+  diabolos: { id: 62, dc: 'crystal' },
+  excalibur: { id: 93, dc: 'primal' },
+  exodus: { id: 53, dc: 'primal' },
+  famfrit: { id: 35, dc: 'primal' },
+  hyperion: { id: 95, dc: 'primal' },
+  lamia: { id: 55, dc: 'primal' },
+  leviathan: { id: 64, dc: 'primal' },
+  malboro: { id: 75, dc: 'crystal' },
+  ultros: { id: 77, dc: 'primal' },
+  cerberus: { id: 80, dc: 'chaos' },
+  lich: { id: 36, dc: 'light' },
+  moogle: { id: 71, dc: 'chaos' },
+  odin: { id: 66, dc: 'light' },
+  phoenix: { id: 56, dc: 'light' },
+  ragnarok: { id: 97, dc: 'chaos' },
+  shiva: { id: 67, dc: 'light' },
+  zodiark: { id: 42, dc: 'light' },
+  omega: { id: 39, dc: 'chaos' },
+  louisoix: { id: 83, dc: 'chaos' },
+  twintania: { id: 33, dc: 'light' },
+  spriggan: { id: 85, dc: 'chaos' }
 };
 let currentmobid = 0;
-let instanceid = 1;
+let instanceid = 0;
 
 /**
  * Generate date object with the year nearest to current date.
@@ -343,14 +343,17 @@ function main_huntnet() {
             if (mob) {
                 currentmobid = mob.id;
                 console.log(mob.id, mob.name_en);
-                if (area.endsWith('2')) {
+                if (area.endsWith('1')) {
+                    instanceid = 1;
+                }
+                else if (area.endsWith('2')) {
                     instanceid = 2;
                 }
                 else if (area.endsWith('3')) {
                     instanceid = 3;
                 }
                 else {
-                    instanceid = 1;
+                    instanceid = 0;
                 }
             }
             else {
@@ -391,7 +394,12 @@ function main_huntnet() {
                     div.classList.add('faloop');
                     let link = document.createElement('a');
                     link.target = '_blank';
-                    link.href = `https://faloop.app/${world.toLowerCase()}?worldid=${worldnameidmap[world.toLowerCase()]}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`;
+		    if (instanceid==0) {
+                        link.href = `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}`;
+                    }
+                    else {
+                        link.href = `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`;
+                    }
                     link.innerText = `Open Faloop!`;
                     popup.appendChild(div);
                     div.appendChild(link);

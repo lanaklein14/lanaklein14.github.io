@@ -218,74 +218,74 @@ const mobs = [{
     name_de: "Gunitt"
 }];
 const worldmap = {
-  aegis: { id: 90, dc: 'elemental' },
-  atomos: { id: 68, dc: 'elemental' },
-  carbuncle: { id: 45, dc: 'elemental' },
-  garuda: { id: 58, dc: 'elemental' },
-  gungnir: { id: 94, dc: 'elemental' },
-  kujata: { id: 49, dc: 'elemental' },
-  ramuh: { id: 60, dc: 'elemental' },
-  tonberry: { id: 72, dc: 'elemental' },
-  typhon: { id: 50, dc: 'elemental' },
-  unicorn: { id: 30, dc: 'elemental' },
-  alexander: { id: 43, dc: 'gaia' },
-  bahamut: { id: 69, dc: 'gaia' },
-  durandal: { id: 92, dc: 'gaia' },
-  fenrir: { id: 46, dc: 'gaia' },
-  ifrit: { id: 59, dc: 'gaia' },
-  ridill: { id: 98, dc: 'gaia' },
-  tiamat: { id: 76, dc: 'gaia' },
-  ultima: { id: 51, dc: 'gaia' },
-  valefor: { id: 52, dc: 'gaia' },
-  yojimbo: { id: 31, dc: 'gaia' },
-  zeromus: { id: 32, dc: 'gaia' },
-  anima: { id: 44, dc: 'mana' },
-  asura: { id: 23, dc: 'mana' },
-  belias: { id: 24, dc: 'mana' },
-  chocobo: { id: 70, dc: 'mana' },
-  hades: { id: 47, dc: 'mana' },
-  ixion: { id: 48, dc: 'mana' },
-  mandragora: { id: 82, dc: 'mana' },
-  masamune: { id: 96, dc: 'mana' },
-  pandaemonium: { id: 28, dc: 'mana' },
-  shinryu: { id: 29, dc: 'mana' },
-  titan: { id: 61, dc: 'mana' },
-  adamantoise: { id: 73, dc: 'aether' },
-  balmung: { id: 91, dc: 'crystal' },
-  cactuar: { id: 79, dc: 'aether' },
-  coeurl: { id: 74, dc: 'crystal' },
-  faerie: { id: 54, dc: 'aether' },
-  gilgamesh: { id: 63, dc: 'aether' },
-  goblin: { id: 81, dc: 'crystal' },
-  jenova: { id: 40, dc: 'aether' },
-  mateus: { id: 37, dc: 'crystal' },
-  midgardsormr: { id: 65, dc: 'aether' },
-  sargatanas: { id: 99, dc: 'aether' },
-  siren: { id: 57, dc: 'aether' },
-  zalera: { id: 41, dc: 'crystal' },
-  behemoth: { id: 78, dc: 'primal' },
-  brynhildr: { id: 34, dc: 'crystal' },
-  diabolos: { id: 62, dc: 'crystal' },
-  excalibur: { id: 93, dc: 'primal' },
-  exodus: { id: 53, dc: 'primal' },
-  famfrit: { id: 35, dc: 'primal' },
-  hyperion: { id: 95, dc: 'primal' },
-  lamia: { id: 55, dc: 'primal' },
-  leviathan: { id: 64, dc: 'primal' },
-  malboro: { id: 75, dc: 'crystal' },
-  ultros: { id: 77, dc: 'primal' },
-  cerberus: { id: 80, dc: 'chaos' },
-  lich: { id: 36, dc: 'light' },
-  moogle: { id: 71, dc: 'chaos' },
-  odin: { id: 66, dc: 'light' },
-  phoenix: { id: 56, dc: 'light' },
-  ragnarok: { id: 97, dc: 'chaos' },
-  shiva: { id: 67, dc: 'light' },
-  zodiark: { id: 42, dc: 'light' },
-  omega: { id: 39, dc: 'chaos' },
-  louisoix: { id: 83, dc: 'chaos' },
-  twintania: { id: 33, dc: 'light' },
-  spriggan: { id: 85, dc: 'chaos' }
+  aegis: { id: 90, dc: 'elemental', sn: 'aegi' },
+  atomos: { id: 68, dc: 'elemental', sn: 'atom' },
+  carbuncle: { id: 45, dc: 'elemental', sn: 'carb' },
+  garuda: { id: 58, dc: 'elemental', sn: 'garu' },
+  gungnir: { id: 94, dc: 'elemental', sn: 'gung' },
+  kujata: { id: 49, dc: 'elemental', sn: 'kuja' },
+  ramuh: { id: 60, dc: 'elemental', sn: 'ramu' },
+  tonberry: { id: 72, dc: 'elemental', sn: 'tonb' },
+  typhon: { id: 50, dc: 'elemental', sn: 'typh' },
+  unicorn: { id: 30, dc: 'elemental', sn: 'unic' },
+  alexander: { id: 43, dc: 'gaia', sn: 'alex' },
+  bahamut: { id: 69, dc: 'gaia', sn: 'baha' },
+  durandal: { id: 92, dc: 'gaia', sn: 'dura' },
+  fenrir: { id: 46, dc: 'gaia', sn: 'fenr' },
+  ifrit: { id: 59, dc: 'gaia', sn: 'ifri' },
+  ridill: { id: 98, dc: 'gaia', sn: 'ridi' },
+  tiamat: { id: 76, dc: 'gaia', sn: 'tiam' },
+  ultima: { id: 51, dc: 'gaia', sn: 'ulti' },
+  valefor: { id: 52, dc: 'gaia', sn: 'vale' },
+  yojimbo: { id: 31, dc: 'gaia', sn: 'yoji' },
+  zeromus: { id: 32, dc: 'gaia', sn: 'zero' },
+  anima: { id: 44, dc: 'mana', sn: 'anim' },
+  asura: { id: 23, dc: 'mana', sn: 'asur' },
+  belias: { id: 24, dc: 'mana', sn: 'beli' },
+  chocobo: { id: 70, dc: 'mana', sn: 'choc' },
+  hades: { id: 47, dc: 'mana', sn: 'hade' },
+  ixion: { id: 48, dc: 'mana', sn: 'ixio' },
+  mandragora: { id: 82, dc: 'mana', sn: 'mand' },
+  masamune: { id: 96, dc: 'mana', sn: 'masa' },
+  pandaemonium: { id: 28, dc: 'mana', sn: 'pand' },
+  shinryu: { id: 29, dc: 'mana', sn: 'shin' },
+  titan: { id: 61, dc: 'mana', sn: 'tita' },
+  adamantoise: { id: 73, dc: 'aether', sn: 'adam' },
+  balmung: { id: 91, dc: 'crystal', sn: 'balm' },
+  cactuar: { id: 79, dc: 'aether', sn: 'cact' },
+  coeurl: { id: 74, dc: 'crystal', sn: 'coeu' },
+  faerie: { id: 54, dc: 'aether', sn: 'faer' },
+  gilgamesh: { id: 63, dc: 'aether', sn: 'gilg' },
+  goblin: { id: 81, dc: 'crystal', sn: 'gobl' },
+  jenova: { id: 40, dc: 'aether', sn: 'jeno' },
+  mateus: { id: 37, dc: 'crystal', sn: 'mate' },
+  midgardsormr: { id: 65, dc: 'aether', sn: 'midg' },
+  sargatanas: { id: 99, dc: 'aether', sn: 'sarg' },
+  siren: { id: 57, dc: 'aether', sn: 'sire' },
+  zalera: { id: 41, dc: 'crystal', sn: 'zale' },
+  behemoth: { id: 78, dc: 'primal', sn: 'behe' },
+  brynhildr: { id: 34, dc: 'crystal', sn: 'bryn' },
+  diabolos: { id: 62, dc: 'crystal', sn: 'diab' },
+  excalibur: { id: 93, dc: 'primal', sn: 'exca' },
+  exodus: { id: 53, dc: 'primal', sn: 'exod' },
+  famfrit: { id: 35, dc: 'primal', sn: 'famf' },
+  hyperion: { id: 95, dc: 'primal', sn: 'hype' },
+  lamia: { id: 55, dc: 'primal', sn: 'lami' },
+  leviathan: { id: 64, dc: 'primal', sn: 'levi' },
+  malboro: { id: 75, dc: 'crystal', sn: 'malb' },
+  ultros: { id: 77, dc: 'primal', sn: 'ultr' },
+  cerberus: { id: 80, dc: 'chaos', sn: 'cerb' },
+  lich: { id: 36, dc: 'light', sn: 'lich' },
+  moogle: { id: 71, dc: 'chaos', sn: 'moog' },
+  odin: { id: 66, dc: 'light', sn: 'odin' },
+  phoenix: { id: 56, dc: 'light', sn: 'phoe' },
+  ragnarok: { id: 97, dc: 'chaos', sn: 'ragn' },
+  shiva: { id: 67, dc: 'light', sn: 'shiv' },
+  zodiark: { id: 42, dc: 'light', sn: 'zodi' },
+  omega: { id: 39, dc: 'chaos', sn: 'omeg' },
+  louisoix: { id: 83, dc: 'chaos', sn: 'loui' },
+  twintania: { id: 33, dc: 'light', sn: 'twin' },
+  spriggan: { id: 85, dc: 'chaos', sn: 'spri' }
 };
 let currentmobid = 0;
 let instanceid = 0;
@@ -387,6 +387,7 @@ function main_huntnet() {
                 }
                 console.log(mean);
                 console.log(new Date(mean));
+                console.log("hasFaloopReport", hasFaloopReport);
                 if (!hasFaloopReport && currentmobid !== 0 && !popup.querySelector('div.faloop')) {
                     const world = document.querySelector('#selected-world').textContent;
                     let div = document.createElement('div');
@@ -417,12 +418,12 @@ function main_huntnet() {
  * @param {int} timeOfDeath - timeOfDeath in unixtime millisec
  */
 function setDefaultTOD(timeOfDeath) {
-    const detailPane = document.querySelector('div.TimerGroups_details__YAKwO');
+    const detailPane = document.querySelector('div.MobReport_sections__3mZt4');
     if (!detailPane) {
         console.log('Could not find the details pane. skipping.');
         return;
     }
-    const button = detailPane.querySelectorAll('button.ActionButtons_up-down-btn__KPkj-.btn.btn-danger')[1];
+    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2bdqP button.btn-danger')[1];
     if (!button) {
         console.log('Could not find subtract TOD button. skipping.');
         return;
@@ -455,7 +456,7 @@ function setDefaultTOD(timeOfDeath) {
     for (let i = 0; i < minutes; i++) {
         button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
-    const submit = detailPane.querySelector('button.ActionButtons_action__T36M5.btn.btn-danger');
+    const submit = detailPane.querySelector('div.ActionBox_container__3xY6R button.btn-danger');
 	if (submit) {
         submit.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
@@ -464,30 +465,32 @@ function setDefaultTOD(timeOfDeath) {
 /**
  * Find the mob row (may retry in case of loading).
  * Open the details pane and call setDefaultTOD function.
+ * @param {string} worldsn - target world in short name
  * @param {object} mob - target mob object
  * @param {int} timeOfDeath - time of death in unixtime millisec
  * @param {int} retryCount - retry count
  */
-function selectMob(mob, timeOfDeath, retryCount) {
-    let nameTags = Array.from(document.querySelectorAll('span.MarkNameColumn_name__14HXZ'));
+function selectMob(worldsn, mob, timeOfDeath, retryCount) {
+    let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__2Wfh0'));
     let nameTag = nameTags.find(t => {
-        const name = t.textContent.toLowerCase();
-        return (name == mob.name_ja.toLowerCase() ||
+        const name = t.querySelector('span.h5').textContent.toLowerCase();
+        const sn = t.querySelector('span.badge.d-inline').textContent.toLowerCase();
+        return (worldsn == sn &&
+            (name == mob.name_ja.toLowerCase() ||
             name == mob.name_en.toLowerCase() ||
             name == mob.name_fr.toLowerCase() ||
-            name == mob.name_de.toLowerCase());
+            name == mob.name_de.toLowerCase()));
     });
 
     if (nameTag) {
         console.log(`Mob row for ${nameTag.textContent} found.`);
-        const row = nameTag.closest('div.TimerGroupRow_row__2GYfv');
-        row.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        nameTag.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         setTimeout(function () { setDefaultTOD(timeOfDeath); }, 500);
     }
     else {
         if (retryCount > 0) {
             console.log(`Mob row not found. Retry(${retryCount - 1})`);
-            setTimeout(function () { selectMob(mob, timeOfDeath, retryCount - 1) }, 1000);
+            setTimeout(function () { selectMob(worldsn, mob, timeOfDeath, retryCount - 1) }, 1000);
         }
         else {
             console.log(`Mob row not found. Skipping.`)
@@ -495,17 +498,21 @@ function selectMob(mob, timeOfDeath, retryCount) {
     }
 }
 
+
 /**
  * Main function. Validate the url parameters and execute selectMob.
  */
 function main_faloop() {
     const urlParams = new URLSearchParams(window.location.search);
+    const worldid = urlParams.get('worldid');
     const mobid = urlParams.get('mobid');
     const time = urlParams.get('time');
     const mob = mobs.find(m => { return m.id == mobid });
-    if (mob && time) {
-        console.log('Valid parameters detected. Processing.', mobid, time);
-        selectMob(mob, time, 10);
+    if (worldid && mob && time) {
+        console.log('Valid parameters detected. Processing.', worldid, mobid, time);
+        const worldsn = Object.values(worldmap).find(item => item.id == worldid).sn;
+        console.log('world short name', worldsn);
+        selectMob(worldsn, mob, time, 10);
     }
     else {
         console.log('Valid parameters NOT detected. Skipping.');

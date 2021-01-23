@@ -287,6 +287,91 @@ const worldmap = {
   twintania: { id: 33, dc: 'light', sn: 'twin' },
   spriggan: { id: 85, dc: 'chaos', sn: 'spri' }
 };
+
+const b2h = ((i, n, a) => {
+    while (i < n) {
+        a[i] = (i++ + 0x100).toString(16).substr(1);
+    }
+    return a;
+})(0, 256, []);
+
+const h2b = ((b2h, h2b) => {
+    b2h.forEach(function (h, i) {
+        h2b[h] = i;
+    });
+    return h2b;
+})(b2h, {});
+
+const regexp = /^([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})-([a-f0-9]{2})([a-f0-9]{2})-([a-f0-9]{2})([a-f0-9]{2})-([a-f0-9]{2})([a-f0-9]{2})-([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/;
+
+class UUID {
+    constructor(bytes) {
+        this.bytes = bytes;
+    }
+
+    get string() {
+        return this.toString();
+    }
+
+    get ellipsis() {
+        return this.string.split(/-/).slice(0, 2).join("-") + "-...";
+    }
+
+    toJSON() {
+        return this.toString();
+    }
+
+    toString() {
+        if (this._string) {
+            return this._string;
+        }
+        const ba = new Uint8Array(this.bytes);
+        let i = 0;
+        const s = b2h[ba[i++]] + b2h[ba[i++]] +
+                  b2h[ba[i++]] + b2h[ba[i++]] + "-" +
+                  b2h[ba[i++]] + b2h[ba[i++]] + "-" +
+                  b2h[ba[i++]] + b2h[ba[i++]] + "-" +
+                  b2h[ba[i++]] + b2h[ba[i++]] + "-" +
+                  b2h[ba[i++]] + b2h[ba[i++]] +
+                  b2h[ba[i++]] + b2h[ba[i++]] +
+                  b2h[ba[i++]] + b2h[ba[i++]]
+        this._string = s;
+        return s;
+    }
+
+    equals(target) {
+        const a = new Uint8Array(this.bytes);
+        const b = new Uint8Array(target.bytes);
+        for (let i = 0; i < 16; i++) {
+            if (a[i] !== b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    writeToBuffer(buf, offset) {
+        const from = new Uint8Array(this.bytes);
+        const to = new Uint8Array(buf, offset);
+        const len = from.length;
+        for (let i = 0; i < len; i++) {
+            to[i] = from[i];
+        }
+    }
+
+    static parse(str) {
+        let ba = new Uint8Array(16);
+        const md = str.toLowerCase().match(regexp);
+        if (md === null) {
+            throw Error("invalid uuid string");
+        }
+        for (let i = 0; i < 16; i++) {
+            ba[i] = h2b[md[i + 1]];
+        }
+        return new UUID(ba.buffer);
+    }
+}
+
 let currentmobid = 0;
 let instanceid = 0;
 
@@ -394,16 +479,32 @@ function main_huntnet() {
                     div.classList.add('score');
                     div.classList.add('faloop');
                     let link = document.createElement('a');
-                    link.target = '_blank';
-		    if (instanceid==0) {
-                        link.href = `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}`;
-                    }
-                    else {
-                        link.href = `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`;
-                    }
-                    link.innerText = `Open Faloop!`;
+                    link.innerText = `Mark & Open Faloop!`;
                     popup.appendChild(div);
                     div.appendChild(link);
+                    link.onclick = function() {
+                        const data = new ArrayBuffer(40);
+                        const dv = new DataView(data);
+                        const uuid = UUID.parse(localStorage.getItem("userid"));
+                        uuid.writeToBuffer(data, 0);
+                        dv.setUint32(16, parseInt(localStorage.getItem("secret")));
+                        dv.setUint32(20, worldmap[world.toLowerCase()].id);
+                        dv.setUint32(24, currentmobid);
+                        dv.setUint8(28, instanceid==0 ? 1 : instanceid);
+                        dv.setUint8(29, 10);
+                        dv.setInt32(30, Math.floor(mean / 1000));
+                        dv.setInt32(34, Math.floor(Date.now() / 1000));
+                        dv.setUint8(38, 0);
+                        dv.setUint8(39, 0);
+                        fetch("/api/hunt/2/new", {
+                            method: "POST",
+                            body: data
+                        });
+                        window.open(
+                            instanceid==0 ?
+                            `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}` :
+                            `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`, "_blank");
+                    }
                 }
             }
         }
@@ -470,7 +571,7 @@ function setDefaultTOD(timeOfDeath) {
  * @param {int} timeOfDeath - time of death in unixtime millisec
  * @param {int} retryCount - retry count
  */
-function selectMob(worldsn, mob, timeOfDeath, retryCount, instanceid='') {
+function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
     let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__2Wfh0'));
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
@@ -487,12 +588,14 @@ function selectMob(worldsn, mob, timeOfDeath, retryCount, instanceid='') {
     if (nameTag) {
         console.log(`Mob row for ${nameTag.textContent} found.`);
         nameTag.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        setTimeout(function () { setDefaultTOD(timeOfDeath); }, 500);
+        if (timeOfDeath) {
+            setTimeout(function () { setDefaultTOD(timeOfDeath); }, 500);
+        }
     }
     else {
         if (retryCount > 0) {
             console.log(`Mob row not found. Retry(${retryCount - 1})`);
-            setTimeout(function () { selectMob(worldsn, mob, timeOfDeath, retryCount - 1, instanceid) }, 1000);
+            setTimeout(function () { selectMob(worldsn, mob, retryCount - 1, timeOfDeath, instanceid) }, 1000);
         }
         else {
             console.log(`Mob row not found. Skipping.`)
@@ -511,12 +614,13 @@ function main_faloop() {
     const time = urlParams.get('time');
     const instanceid = urlParams.get('instanceid');
     const mob = mobs.find(m => { return m.id == mobid });
-    if (worldid && mob && time) {
-        console.log('Valid parameters detected. Processing.', worldid, mobid, time);
+    if (worldid && mob) {
+        console.log('Valid parameters detected. Processing.', worldid, mobid);
         const worldsn = Object.values(worldmap).find(item => item.id == worldid).sn;
         console.log('world short name', worldsn);
+        console.log('time', time);
         console.log('instanceid', instanceid);
-        selectMob(worldsn, mob, time, 10, instanceid ? instanceid : '');
+        selectMob(worldsn, mob, 10, time, instanceid ? instanceid : '');
     }
     else {
         console.log('Valid parameters NOT detected. Skipping.');

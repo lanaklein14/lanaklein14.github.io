@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0
+// @version 1.0.1
 // ==/UserScript==
 const mobs = [{
     id: 2962,
@@ -519,12 +519,12 @@ function main_huntnet() {
  * @param {int} timeOfDeath - timeOfDeath in unixtime millisec
  */
 function setDefaultTOD(timeOfDeath) {
-    const detailPane = document.querySelector('div.MobReport_sections__3mZt4');
+    const detailPane = document.querySelector('div.MobReport_sections__3Huvj');
     if (!detailPane) {
         console.log('Could not find the details pane. skipping.');
         return;
     }
-    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2bdqP button.btn-danger')[1];
+    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2Y8w_ button.btn-danger')[1];
     if (!button) {
         console.log('Could not find subtract TOD button. skipping.');
         return;
@@ -557,7 +557,7 @@ function setDefaultTOD(timeOfDeath) {
     for (let i = 0; i < minutes; i++) {
         button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
-    const submit = detailPane.querySelector('div.ActionBox_container__3xY6R button.btn-danger');
+    const submit = detailPane.querySelector('div.ActionBox_container__1yx4z button.btn-danger');
 	if (submit) {
         submit.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }

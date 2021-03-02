@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.1
+// @version 1.0.2
 // ==/UserScript==
 const mobs = [{
     id: 2962,
@@ -483,23 +483,29 @@ function main_huntnet() {
                     popup.appendChild(div);
                     div.appendChild(link);
                     link.onclick = function() {
-                        const data = new ArrayBuffer(40);
-                        const dv = new DataView(data);
-                        const uuid = UUID.parse(localStorage.getItem("userid"));
-                        uuid.writeToBuffer(data, 0);
-                        dv.setUint32(16, parseInt(localStorage.getItem("secret")));
-                        dv.setUint32(20, worldmap[world.toLowerCase()].id);
-                        dv.setUint32(24, currentmobid);
-                        dv.setUint8(28, instanceid==0 ? 1 : instanceid);
-                        dv.setUint8(29, 10);
-                        dv.setInt32(30, Math.floor(mean / 1000));
-                        dv.setInt32(34, Math.floor(Date.now() / 1000));
-                        dv.setUint8(38, 0);
-                        dv.setUint8(39, 0);
-                        fetch("/api/hunt/2/new", {
-                            method: "POST",
-                            body: data
-                        });
+                        try {
+                            const data = new ArrayBuffer(40);
+                            const dv = new DataView(data);
+                            console.log('userid', localStorage.getItem("userid"));
+                            const uuid = UUID.parse(localStorage.getItem("userid"));
+                            uuid.writeToBuffer(data, 0);
+                            dv.setUint32(16, parseInt(localStorage.getItem("secret")));
+                            dv.setUint32(20, worldmap[world.toLowerCase()].id);
+                            dv.setUint32(24, currentmobid);
+                            dv.setUint8(28, instanceid==0 ? 1 : instanceid);
+                            dv.setUint8(29, 10);
+                            dv.setInt32(30, Math.floor(mean / 1000));
+                            dv.setInt32(34, Math.floor(Date.now() / 1000));
+                            dv.setUint8(38, 0);
+                            dv.setUint8(39, 0);
+                            fetch("/api/hunt/2/new", {
+                                method: "POST",
+                                body: data
+                            });
+                        } catch (e) {
+                            console.log('failed to self report with local user cache');
+                            console.log('continue to open faloop');
+                        }
                         window.open(
                             instanceid==0 ?
                             `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}` :

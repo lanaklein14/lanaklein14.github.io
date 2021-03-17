@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.2
+// @version 1.0.3
 // ==/UserScript==
 const mobs = [{
     id: 2962,
@@ -525,12 +525,12 @@ function main_huntnet() {
  * @param {int} timeOfDeath - timeOfDeath in unixtime millisec
  */
 function setDefaultTOD(timeOfDeath) {
-    const detailPane = document.querySelector('div.MobReport_sections__3Huvj');
+    const detailPane = document.querySelector('div.MobReport_sections__3yIiX');
     if (!detailPane) {
         console.log('Could not find the details pane. skipping.');
         return;
     }
-    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2Y8w_ button.btn-danger')[1];
+    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2WbRP button.btn-danger')[1];
     if (!button) {
         console.log('Could not find subtract TOD button. skipping.');
         return;
@@ -563,7 +563,7 @@ function setDefaultTOD(timeOfDeath) {
     for (let i = 0; i < minutes; i++) {
         button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
-    const submit = detailPane.querySelector('div.ActionBox_container__1yx4z button.btn-danger');
+    const submit = detailPane.querySelector('div.ActionBox_container__1piW1 button.btn-danger');
 	if (submit) {
         submit.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
@@ -578,7 +578,7 @@ function setDefaultTOD(timeOfDeath) {
  * @param {int} retryCount - retry count
  */
 function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
-    let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__2Wfh0'));
+    let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__1yWLG'));
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
         const instance = t.querySelector('span.h4') != null ? t.querySelector('span.h4').textContent.toLowerCase() : '';

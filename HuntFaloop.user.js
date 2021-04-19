@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.3
+// @version 1.0.4
 // ==/UserScript==
 const mobs = [{
     id: 2962,
@@ -578,7 +578,7 @@ function setDefaultTOD(timeOfDeath) {
  * @param {int} retryCount - retry count
  */
 function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
-    let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__1yWLG'));
+    let nameTags = Array.from(document.querySelectorAll('div.SMobsPageRow_row__2qBhm'));
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
         const instance = t.querySelector('span.h4') != null ? t.querySelector('span.h4').textContent.toLowerCase() : '';

@@ -582,7 +582,8 @@ function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
         const instance = t.querySelector('span.h4') != null ? t.querySelector('span.h4').textContent.toLowerCase() : '';
-        const sn = t.querySelector('span.badge.d-inline').textContent.toLowerCase();
+        let sn_temp = t.querySelector('span.badge.mr-2').textContent.toLowerCase();
+        const sn = sn_temp.slice(0, 4);
         console.log(`world: ${worldsn}=${sn}`, `instance: ${instanceid}=${instance}`, `mob: ${name}=${mob.name_ja.toLowerCase()}|${mob.name_en.toLowerCase()}|${mob.name_fr.toLowerCase()}|${mob.name_de.toLowerCase()}`);
         return (worldsn == sn && instanceid == instance &&
             (name == mob.name_ja.toLowerCase() ||

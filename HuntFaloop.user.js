@@ -711,7 +711,7 @@ function processAMobRow(el) {
     const name = el.querySelector("span[class*='MobName_name']").textContent.toLowerCase();
     const mob = tourMobs.find(mob=>(name == mob.name_ja.toLowerCase() || name == mob.name_en.toLowerCase() || name == mob.name_fr.toLowerCase() || name == mob.name_de.toLowerCase()));
     const instance = el.querySelector('span.h4') != null ? el.querySelector('span.h4').textContent.toLowerCase() : '';
-    const isActive = el.querySelector('span.text-info') != null; // TBD better verification
+    const isActive = el.querySelector('span.text-info') != null || el.querySelector('span.text-success') != null; // TBD better verification
     if (mob && isActive) {
         const launchButton = document.createElement("button");
         launchButton.classList.add("dropbtn");

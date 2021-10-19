@@ -4,7 +4,8 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.3
+// @version 1.0.4
+// @updateURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // ==/UserScript==
 const mobs = [{
     id: 2962,

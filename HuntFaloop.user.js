@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.7
+// @version 1.0.8
 // @downloadURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // @updateURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // ==/UserScript==
@@ -708,6 +708,62 @@ function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
     }
 }
 
+async function refreshToken() {
+    const sessionId = localStorage.getItem("sessionId");
+    const url = "https://api.faloop.app/api/auth/user/refresh";
+    const token = localStorage.getItem("token");
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+    };
+    const res = await fetch(url, {
+        method: "Post",
+        headers,
+        body: JSON.stringify({sessionId: sessionId})
+    });
+    const data = await res.json();
+    if (data.success) {
+        console.log("token refreshed", data.token);
+        localStorage.setItem("token", data.token);
+    }
+}
+
+async function fetch_retry(url, body, n) {
+    try {
+        const token = localStorage.getItem("token");
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token
+        };
+        const res = await fetch(url, {
+            method: "POST",
+            headers,
+            body,
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            return;
+        }
+        else if (data.code === 401 && data.msg === "Unauthorized" && !data.success) {
+            // refresh token and retry
+            await refreshToken();
+            return await fetch_retry(url, body, n - 1);
+        }
+        else {
+            console.error(`token: ${token}`);
+            throw data;
+        }
+    } catch (err) {
+        console.error(`fetch failed with ${err}. retry count ${n}`);
+        await new Promise(r => setTimeout(r, 1000));
+        if (n === 1) throw err;
+        return await fetch_retry(url, body, n - 1);
+    }
+};
+
 function processAMobRow(el) {
     const name = el.querySelector("span[class*='MobName_name']").textContent.toLowerCase();
     const mob = tourMobs.find(mob=>(name == mob.name_ja.toLowerCase() || name == mob.name_en.toLowerCase() || name == mob.name_fr.toLowerCase() || name == mob.name_de.toLowerCase()));
@@ -742,13 +798,14 @@ function processAMobRow(el) {
         submitButton.setAttribute("data-instance", instance);
 
         submitButton.innerText = "Killed Now!";
-        submitButton.addEventListener('click', (event)=>{
+        submitButton.addEventListener('click', async (event) => {
+            event.stopPropagation();
             const mobId = parseInt(submitButton.getAttribute("data-mobid"), 10);
             const worldId = parseInt(submitButton.getAttribute("data-worldid"), 10);
             const zoneId = parseInt(submitButton.getAttribute("data-zoneid"), 10);
             const zoneInstance = submitButton.getAttribute("data-instance") == '' ? null : parseInt(submitButton.getAttribute("data-instance"), 10);
             const url = `https://api.faloop.app/api/mobs/${mobId}/report`
-            const payload = {
+            const body = JSON.stringify({
                 action: "death",
                 data: {killedMinsAgo: 0},
                 stage: null,
@@ -756,29 +813,14 @@ function processAMobRow(el) {
                 worldId,
                 zoneId,
                 zoneInstance
-            }
-            console.log("quick report", url, payload);
-            //alert(`Ready to POST: ${url}\n ${JSON.stringify(payload, null, '  ')}`);
+            });
+            console.log("quick report", url, body);
             try {
-                const body = JSON.stringify(payload);
-                const token = localStorage.getItem("token");
-                const headers = {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': token
-                };
-                fetch(url, {
-                    method: "POST",
-                    headers,
-                    body,
-                }).then((res)=> res.json()).then((json)=>{
-                    console.log(json);
-                    el.removeChild(parentDiv);
-                }).catch(console.error);
+                await fetch_retry(url, body, 5);
+                el.removeChild(parentDiv)
             } catch (e) {
                 console.error('failed to post report', e);
             }
-            event.stopPropagation();
         }, false);
 
         const parentDiv = document.createElement("div");
@@ -857,8 +899,6 @@ function main_faloop() {
     else {
         console.log('Valid parameters NOT detected. Skipping.');
     }
-    //configureAMobs(10);
-    //wait_for_load(10);
     const observer = new MutationObserver(records => {
         records.forEach((record) => {
             if ( record.type != "childList" || record.addedNodes.length === 0) {

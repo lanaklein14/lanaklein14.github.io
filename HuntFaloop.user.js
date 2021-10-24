@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.8
+// @version 1.0.9
 // @downloadURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // @updateURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // ==/UserScript==
@@ -864,7 +864,7 @@ function main_faloop() {
       left: 100%;
       top: 0;
       z-index: 1;
-      border-radius: 10px;
+      border-radius: 3px;
       color: #fff;
       background-color: #e85b58;
       border-bottom: 3px solid #b84c00;

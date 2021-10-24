@@ -4,7 +4,8 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.5
+// @version 1.0.6
+// @downloadURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // @updateURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // ==/UserScript==
 const mobs = [{
@@ -710,8 +711,7 @@ function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
 function processAMobRow(el) {
     const name = el.querySelector("span[class*='MobName_name']").textContent.toLowerCase();
     const mob = tourMobs.find(mob=>(name == mob.name_ja.toLowerCase() || name == mob.name_en.toLowerCase() || name == mob.name_fr.toLowerCase() || name == mob.name_de.toLowerCase()));
-    const instance = el.querySelector('span.h4') != null ? el.querySelector('span.h4').textContent.toLowerCase() : '';
-    const isActive = el.querySelector('span.text-info') != null || el.querySelector('span.text-success') != null; // TBD better verification
+    const isActive = el.querySelector('div.bg-gradient-info') != null; // TBD better verification
     if (mob && isActive) {
         const launchButton = document.createElement("button");
         launchButton.classList.add("dropbtn");
@@ -720,7 +720,6 @@ function processAMobRow(el) {
         submitButton.classList.add("dropdown-content");
         submitButton.setAttribute("data-mobid", mob.id);
         submitButton.setAttribute("data-zoneid", mob.zoneId);
-        submitButton.setAttribute("data-instance", instance);
         // parse target worldId
         let world = '';
         const divWithWorld = el.querySelector("div[class*='AMobsPageRow_with-world']");
@@ -728,11 +727,20 @@ function processAMobRow(el) {
             world = divWithWorld.firstChild.textContent.toLowerCase();
         }
         else {
-            world = document.querySelector("div[class*='WorldSelector'] > span").textContent.toLowerCase();
+            let worldNode = document.querySelector("div[class*='WorldSelector'] > span")
+            if (worldNode == null) {
+                const select = document.querySelector("select.custom-select");
+                worldNode = select.options[select.selectedIndex];
+            }
+            world = worldNode.textContent.toLowerCase();
         }
-        submitButton.setAttribute("data-worldid", worldmap[world].id);
+        const entry = Object.entries(worldmap).find(([key, value]) => key == world || value.sn == world);
+        submitButton.setAttribute("data-worldid", worldmap[entry[0]].id);
         // parse target instance
         // TBD
+        const instance = el.querySelector('span.h4') != null ? el.querySelector('span.h4').textContent.toLowerCase() : '';
+        submitButton.setAttribute("data-instance", instance);
+
         submitButton.innerText = "Killed Now!";
         submitButton.addEventListener('click', (event)=>{
             const mobId = parseInt(submitButton.getAttribute("data-mobid"), 10);
@@ -750,7 +758,26 @@ function processAMobRow(el) {
                 zoneInstance
             }
             console.log("quick report", url, payload);
-            alert(`Ready to POST: ${url}\n ${JSON.stringify(payload, null, '  ')}`);
+            //alert(`Ready to POST: ${url}\n ${JSON.stringify(payload, null, '  ')}`);
+            try {
+                const body = JSON.stringify(payload);
+                const token = localStorage.getItem("token");
+                const headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                };
+                fetch(url, {
+                    method: "POST",
+                    headers,
+                    body,
+                }).then((res)=> res.json()).then((json)=>{
+                    console.log(json);
+                    el.removeChild(parentDiv);
+                }).catch(console.error);
+            } catch (e) {
+                console.error('failed to post report', e);
+            }
             event.stopPropagation();
         }, false);
 
@@ -847,7 +874,7 @@ function main_faloop() {
                 const elements = node.querySelectorAll("div[class*='AMobsPageRow_row']");
                 if (elements.length > 0) {
                     elements.forEach((el) => processAMobRow(el));
-                    console.log(elements.length);
+                    //console.log(elements.length);
                 }
             });
         });

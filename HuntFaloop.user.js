@@ -4,7 +4,7 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.9
+// @version 1.1.0
 // @downloadURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // @updateURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // ==/UserScript==
@@ -767,7 +767,7 @@ async function fetch_retry(url, body, n) {
 function processAMobRow(el) {
     const name = el.querySelector("span[class*='MobName_name']").textContent.toLowerCase();
     const mob = tourMobs.find(mob=>(name == mob.name_ja.toLowerCase() || name == mob.name_en.toLowerCase() || name == mob.name_fr.toLowerCase() || name == mob.name_de.toLowerCase()));
-    const isActive = el.querySelector('div.bg-gradient-info') != null || el.querySelector('div.bg-gradient-success') != null; // TBD better verification
+    const isActive = el.querySelector('div.bg-gradient.bg-info') != null || el.querySelector('div.bg-gradient.bg-success') != null; // TBD better verification
     if (mob && isActive) {
         const launchButton = document.createElement("button");
         launchButton.classList.add("dropbtn");
@@ -855,6 +855,7 @@ function main_faloop() {
       border-radius: 10px;
     }
     .dropdown {
+      width: auto;
       position: relative;
       display: inline-block;
     }

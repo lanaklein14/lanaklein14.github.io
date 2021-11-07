@@ -4,7 +4,9 @@
 // @description Script for ffxiv-the-hunt.net -> faloop integration
 // @include https://ffxiv-the-hunt.net/*
 // @include https://faloop.app/*
-// @version 1.0.4
+// @version 1.1.0
+// @downloadURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
+// @updateURL https://github.com/lanaklein14/lanaklein14.github.io/raw/master/HuntFaloop.user.js
 // ==/UserScript==
 const mobs = [{
     id: 2962,
@@ -216,6 +218,103 @@ const mobs = [{
     name_en: "Gunitt",
     name_ja: "グニット",
     name_de: "Gunitt"
+}];
+const tourMobs = [{
+    id: 8906,
+    name_ja: 'ナックラヴィー',
+    name_en: 'Nuckelavee',
+    name_de: 'Nuckelavee',
+    name_fr: 'Nuckelavee',
+    zoneId: 813,
+    rank: 'A'
+}, {
+    id: 8907,
+    name_ja: 'ナリーポン',
+    name_en: 'Nariphon',
+    name_de: 'Nariphon',
+    name_fr: 'Nariphon',
+    zoneId: 813,
+    rank: 'A'
+}, {
+    id: 8911,
+    name_ja: 'リルマーダー',
+    name_en: "Li'l Murderer",
+    name_de: 'Klein[a] Mörder',
+    name_fr: 'Traître',
+    zoneId: 814,
+    rank: 'A'
+}, {
+    id: 8912,
+    name_ja: 'フラカン',
+    name_en: 'Huracan',
+    name_de: 'Huracan',
+    name_fr: 'Huracan',
+    zoneId: 814,
+    rank: 'A'
+}, {
+    id: 8901,
+    name_ja: 'マリクテンダー',
+    name_en: 'Maliktender',
+    name_de: 'Malikkaktor',
+    name_fr: 'Malikpampa',
+    zoneId: 815,
+    rank: 'A'
+}, {
+    id: 8902,
+    name_ja: 'シュガール',
+    name_en: 'Sugaar',
+    name_de: 'Sugaar',
+    name_fr: 'Sugaar',
+    zoneId: 815,
+    rank: 'A'
+}, {
+    id: 8654,
+    name_ja: '泥人',
+    name_en: 'the mudman',
+    name_de: 'Matschklops',
+    name_fr: 'tas de boue',
+    zoneId: 816,
+    rank: 'A'
+}, {
+    id: 8655,
+    name_ja: 'ポールディア',
+    name_en: 'O Poorest Pauldia',
+    name_de: 'gepeinigt[a] Pauldia',
+    name_fr: 'Pauldia',
+    zoneId: 816,
+    rank: 'A'
+}, {
+    id: 8891,
+    name_ja: 'スペイ',
+    name_en: 'Supay',
+    name_de: 'Supay',
+    name_fr: 'Supay',
+    zoneId: 817,
+    rank: 'A'
+}, {
+    id: 8892,
+    name_ja: 'グラスマン',
+    name_en: 'Grassman',
+    name_de: 'Grasmann',
+    name_fr: 'Sasquatch arboricole',
+    zoneId: 817,
+    rank: 'A'
+}, {
+    id: 8896,
+    name_ja: 'ルサルカ',
+    name_en: 'Rusalka',
+    name_de: 'Rusalka',
+    name_fr: 'Roussalka',
+    zoneId: 818,
+    rank: 'A'
+}, {
+    id: 8897,
+    name_ja: 'バール',
+    name_en: 'Baal',
+    name_de: 'Baal',
+    name_fr: 'Baal',
+    zoneId: 818,
+    rank: 'A'
 }];
 const worldmap = {
   aegis: { id: 90, dc: 'elemental', sn: 'aegi' },
@@ -503,7 +602,7 @@ function main_huntnet() {
                                 body: data
                             });
                         } catch (e) {
-                            console.log('failed to self report with local user cache');
+                            console.error('failed to self report with local user cache', e);
                             console.log('continue to open faloop');
                         }
                         window.open(
@@ -525,12 +624,12 @@ function main_huntnet() {
  * @param {int} timeOfDeath - timeOfDeath in unixtime millisec
  */
 function setDefaultTOD(timeOfDeath) {
-    const detailPane = document.querySelector('div.MobReport_sections__3yIiX');
+    const detailPane = document.querySelector('div.MobReport_sections__3Huvj');
     if (!detailPane) {
         console.log('Could not find the details pane. skipping.');
         return;
     }
-    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2WbRP button.btn-danger')[1];
+    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2Y8w_ button.btn-danger')[1];
     if (!button) {
         console.log('Could not find subtract TOD button. skipping.');
         return;
@@ -563,7 +662,7 @@ function setDefaultTOD(timeOfDeath) {
     for (let i = 0; i < minutes; i++) {
         button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
-    const submit = detailPane.querySelector('div.ActionBox_container__1piW1 button.btn-danger');
+    const submit = detailPane.querySelector('div.ActionBox_container__1yx4z button.btn-danger');
 	if (submit) {
         submit.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
@@ -578,13 +677,11 @@ function setDefaultTOD(timeOfDeath) {
  * @param {int} retryCount - retry count
  */
 function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
-    let sn_temp2 = document.querySelector('span.w-100.text-left') != null ? document.querySelector('span.w-100.text-left').textContent.toLowerCase() : '';
-    let nameTags = Array.from(document.querySelectorAll('div.SMobsPageRow_row__2qBhm'));
+    let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__2Wfh0'));
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
         const instance = t.querySelector('span.h4') != null ? t.querySelector('span.h4').textContent.toLowerCase() : '';
-        let sn_temp = t.querySelector('span.badge.mr-2') != null ? t.querySelector('span.badge.mr-2').textContent.toLowerCase() : sn_temp2;
-        const sn = sn_temp.slice(0, 4);
+        const sn = t.querySelector('span.badge.d-inline').textContent.toLowerCase();
         console.log(`world: ${worldsn}=${sn}`, `instance: ${instanceid}=${instance}`, `mob: ${name}=${mob.name_ja.toLowerCase()}|${mob.name_en.toLowerCase()}|${mob.name_fr.toLowerCase()}|${mob.name_de.toLowerCase()}`);
         return (worldsn == sn && instanceid == instance &&
             (name == mob.name_ja.toLowerCase() ||
@@ -611,11 +708,181 @@ function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
     }
 }
 
+async function refreshToken() {
+    const sessionId = localStorage.getItem("sessionId");
+    const url = "https://api.faloop.app/api/auth/user/refresh";
+    const token = localStorage.getItem("token");
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+    };
+    const res = await fetch(url, {
+        method: "Post",
+        headers,
+        body: JSON.stringify({sessionId: sessionId})
+    });
+    const data = await res.json();
+    if (data.success) {
+        console.log("token refreshed", data.token);
+        localStorage.setItem("token", data.token);
+    }
+}
+
+async function fetch_retry(url, body, n) {
+    try {
+        const token = localStorage.getItem("token");
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token
+        };
+        const res = await fetch(url, {
+            method: "POST",
+            headers,
+            body,
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            return;
+        }
+        else if (data.code === 401 && data.msg === "Unauthorized" && !data.success) {
+            // refresh token and retry
+            await refreshToken();
+            return await fetch_retry(url, body, n - 1);
+        }
+        else {
+            console.error(`token: ${token}`);
+            throw data;
+        }
+    } catch (err) {
+        console.error(`fetch failed with ${err}. retry count ${n}`);
+        await new Promise(r => setTimeout(r, 1000));
+        if (n === 1) throw err;
+        return await fetch_retry(url, body, n - 1);
+    }
+};
+
+function processAMobRow(el) {
+    const name = el.querySelector("span[class*='MobName_name']").textContent.toLowerCase();
+    const mob = tourMobs.find(mob=>(name == mob.name_ja.toLowerCase() || name == mob.name_en.toLowerCase() || name == mob.name_fr.toLowerCase() || name == mob.name_de.toLowerCase()));
+    const isActive = el.querySelector('div.bg-gradient.bg-info') != null || el.querySelector('div.bg-gradient.bg-success') != null; // TBD better verification
+    if (mob && isActive) {
+        const launchButton = document.createElement("button");
+        launchButton.classList.add("dropbtn");
+        launchButton.innerText = "report";
+        const submitButton = document.createElement("button");
+        submitButton.classList.add("dropdown-content");
+        submitButton.setAttribute("data-mobid", mob.id);
+        submitButton.setAttribute("data-zoneid", mob.zoneId);
+        // parse target worldId
+        let world = '';
+        const divWithWorld = el.querySelector("div[class*='AMobsPageRow_with-world']");
+        if (divWithWorld) {
+            world = divWithWorld.firstChild.textContent.toLowerCase();
+        }
+        else {
+            let worldNode = document.querySelector("div[class*='WorldSelector'] > span")
+            if (worldNode == null) {
+                const select = document.querySelector("select.custom-select");
+                worldNode = select.options[select.selectedIndex];
+            }
+            world = worldNode.textContent.toLowerCase();
+        }
+        const entry = Object.entries(worldmap).find(([key, value]) => key == world || value.sn == world);
+        submitButton.setAttribute("data-worldid", worldmap[entry[0]].id);
+        // parse target instance
+        // TBD
+        const instance = el.querySelector('span.h4') != null ? el.querySelector('span.h4').textContent.toLowerCase() : '';
+        submitButton.setAttribute("data-instance", instance);
+
+        submitButton.innerText = "Killed Now!";
+        submitButton.addEventListener('click', async (event) => {
+            event.stopPropagation();
+            const mobId = parseInt(submitButton.getAttribute("data-mobid"), 10);
+            const worldId = parseInt(submitButton.getAttribute("data-worldid"), 10);
+            const zoneId = parseInt(submitButton.getAttribute("data-zoneid"), 10);
+            const zoneInstance = submitButton.getAttribute("data-instance") == '' ? null : parseInt(submitButton.getAttribute("data-instance"), 10);
+            const url = `https://api.faloop.app/api/mobs/${mobId}/report`
+            const body = JSON.stringify({
+                action: "death",
+                data: {killedMinsAgo: 0},
+                stage: null,
+                window: 1,
+                worldId,
+                zoneId,
+                zoneInstance
+            });
+            console.log("quick report", url, body);
+            try {
+                await fetch_retry(url, body, 5);
+                el.removeChild(parentDiv)
+            } catch (e) {
+                console.error('failed to post report', e);
+            }
+        }, false);
+
+        const parentDiv = document.createElement("div");
+        parentDiv.classList.add("dropdown");
+        parentDiv.appendChild(launchButton);
+        parentDiv.appendChild(submitButton);
+
+        if (!el.querySelector("div.dropdown")) {
+            const nextEl = el.querySelector("div[class*='AMobsPageRow_name']");
+            el.insertBefore(parentDiv, nextEl.nextSibling);
+        }
+    }
+}
 
 /**
  * Main function. Validate the url parameters and execute selectMob.
  */
 function main_faloop() {
+    const style = document.createElement('style');
+    style.appendChild(document.createTextNode(`
+    .dropbtn {
+      background: #f1e767;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f1e767), to(#feb645));
+      background: -webkit-linear-gradient(top, #f1e767 0%, #feb645 100%);
+      background: linear-gradient(to bottom, #f1e767 0%, #feb645 100%);
+      border-radius: 10px;
+    }
+    .dropdown:hover .dropbtn {
+      background: -webkit-gradient(linear, left bottom, left top, from(#f1e767), to(#feb645));
+      background: -webkit-linear-gradient(bottom, #f1e767 0%, #feb645 100%);
+      background: linear-gradient(to top, #f1e767 0%, #feb645 100%);
+      border-radius: 10px;
+    }
+    .dropdown {
+      width: auto;
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      z-index: 1;
+      border-radius: 3px;
+      color: #fff;
+      background-color: #e85b58;
+      border-bottom: 3px solid #b84c00;
+      -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+      box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+    }
+    .dropdown-content:hover {
+      margin-top: 1px;
+      color: #fff;
+      background: #e87358;
+      border-bottom: 2px solid #b84c00;
+    }
+    .dropdown:hover .dropdown-content {display: block;}
+    `
+    ));
+    document.querySelector('head').appendChild(style);
+
     const urlParams = new URLSearchParams(window.location.search);
     const worldid = urlParams.get('worldid');
     const mobid = urlParams.get('mobid');
@@ -633,6 +900,30 @@ function main_faloop() {
     else {
         console.log('Valid parameters NOT detected. Skipping.');
     }
+    const observer = new MutationObserver(records => {
+        records.forEach((record) => {
+            if ( record.type != "childList" || record.addedNodes.length === 0) {
+                return;
+            }
+            record.addedNodes.forEach((node) => {
+                if (node.tagName != 'DIV') {
+                    return;
+                }
+                if (Array.from(node.classList).some(cls=>cls.startsWith('AMobsPageRow_row'))) {
+                    processAMobRow(node);
+                }
+                const elements = node.querySelectorAll("div[class*='AMobsPageRow_row']");
+                if (elements.length > 0) {
+                    elements.forEach((el) => processAMobRow(el));
+                    //console.log(elements.length);
+                }
+            });
+        });
+    });
+    observer.observe(document, {
+        childList: true,
+        subtree: true
+    });
 }
 
 if (location.hostname === "ffxiv-the-hunt.net") {

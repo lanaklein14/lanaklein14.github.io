@@ -607,8 +607,8 @@ function main_huntnet() {
                         }
                         window.open(
                             instanceid==0 ?
-                            `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}` :
-                            `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`, "_blank");
+                            `https://faloop.app/?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}` :
+                            `https://faloop.app/?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`, "_blank");
                     }
                 }
             }
@@ -624,12 +624,12 @@ function main_huntnet() {
  * @param {int} timeOfDeath - timeOfDeath in unixtime millisec
  */
 function setDefaultTOD(timeOfDeath) {
-    const detailPane = document.querySelector('div.MobReport_sections__3Huvj');
+    const detailPane = document.querySelector('div.MobReport_sections__3MDui');
     if (!detailPane) {
         console.log('Could not find the details pane. skipping.');
         return;
     }
-    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__2Y8w_ button.btn-danger')[1];
+    const button = detailPane.querySelectorAll('div.ActionBox_up-down-btns__3b1sX button.btn-danger')[1];
     if (!button) {
         console.log('Could not find subtract TOD button. skipping.');
         return;
@@ -662,7 +662,7 @@ function setDefaultTOD(timeOfDeath) {
     for (let i = 0; i < minutes; i++) {
         button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
-    const submit = detailPane.querySelector('div.ActionBox_container__1yx4z button.btn-danger');
+    const submit = detailPane.querySelector('div.ActionBox_container__3TQri button.btn-danger');
 	if (submit) {
         submit.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }
@@ -677,11 +677,13 @@ function setDefaultTOD(timeOfDeath) {
  * @param {int} retryCount - retry count
  */
 function selectMob(worldsn, mob, retryCount, timeOfDeath=null, instanceid='') {
-    let nameTags = Array.from(document.querySelectorAll('div.SMobRow_row__2Wfh0'));
+    let sn_temp2 = document.querySelector('span.w-100.text-truncate') != null ? document.querySelector('span.w-100.text-truncate').textContent.toLowerCase() : '';
+    let nameTags = Array.from(document.querySelectorAll('div.SMobsPageRow_row__AyBDV'));
     let nameTag = nameTags.find(t => {
         const name = t.querySelector('span.h5').textContent.toLowerCase();
         const instance = t.querySelector('span.h4') != null ? t.querySelector('span.h4').textContent.toLowerCase() : '';
-        const sn = t.querySelector('span.badge.d-inline').textContent.toLowerCase();
+        let sn_temp = t.querySelector('span.badge.mr-2') != null ? t.querySelector('span.badge.mr-2').textContent.toLowerCase() : sn_temp2;
+        const sn = sn_temp.slice(0, 4);
         console.log(`world: ${worldsn}=${sn}`, `instance: ${instanceid}=${instance}`, `mob: ${name}=${mob.name_ja.toLowerCase()}|${mob.name_en.toLowerCase()}|${mob.name_fr.toLowerCase()}|${mob.name_de.toLowerCase()}`);
         return (worldsn == sn && instanceid == instance &&
             (name == mob.name_ja.toLowerCase() ||

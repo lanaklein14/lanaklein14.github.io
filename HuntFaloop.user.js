@@ -607,8 +607,8 @@ function main_huntnet() {
                         }
                         window.open(
                             instanceid==0 ?
-                            `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}` :
-                            `https://faloop.app/${worldmap[world.toLowerCase()].dc}?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`, "_blank");
+                            `https://faloop.app/?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&time=${mean}` :
+                            `https://faloop.app/?worldid=${worldmap[world.toLowerCase()].id}&mobid=${currentmobid}&instanceid=${instanceid}&time=${mean}`, "_blank");
                     }
                 }
             }

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Emphasize faloop report
 // @namespace    https://github.com/lanaklein14/lanaklein14.github.io
-// @version      0.1
+// @version      1.0
 // @description  When 'event-detail open' element is added, find and emphasize the report by Faloop.
 // @match        https://ffxiv-the-hunt.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ffxiv-the-hunt.net

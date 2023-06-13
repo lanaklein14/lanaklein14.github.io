@@ -3,10 +3,10 @@
 // @namespace    https://github.com/lanaklein14/lanaklein14.github.io
 // @version      0.1
 // @description  When 'event-detail open' element is added, find and emphasize the report by Faloop.
-// @author       You
 // @match        https://ffxiv-the-hunt.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ffxiv-the-hunt.net
 // @grant        none
+// @run-at       document-body
 // @downloadURL  https://github.com/lanaklein14/lanaklein14.github.io/raw/master/emphasize_faloop_report.js
 // @updateURL    https://github.com/lanaklein14/lanaklein14.github.io/raw/master/emphasize_faloop_report.js
 // ==/UserScript==
@@ -36,13 +36,5 @@
     })
   }
 
-  function wait_for_page_load() {
-    if (!document.querySelector('body')) {
-      setTimeout(wait_for_page_load, 1000)
-      console.debug('wait for page load')
-      return
-    }
-    setTimeout(initialize, 1000)
-  }
-  wait_for_page_load()
+  initialize()
 })()

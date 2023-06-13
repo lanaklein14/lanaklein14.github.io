@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Emphasize faloop report
 // @namespace    https://github.com/lanaklein14/lanaklein14.github.io
-// @version      Beta
+// @version      0.6
 // @description  When 'event-detail open' element is added, find and emphasize the report by Faloop.
 // @match        https://ffxiv-the-hunt.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ffxiv-the-hunt.net
@@ -25,6 +25,7 @@
             if (
               report.querySelector('.user-id').textContent == FALOOP_USER_ID
             ) {
+              report.querySelector('.user-id').textContent = 'Faloop!'
               report.querySelector('rect').style.fill = '#5580C8'
             }
           })
